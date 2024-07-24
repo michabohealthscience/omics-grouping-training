@@ -41,7 +41,7 @@ Data is downloaded as we go through the tutorial. However all the materials incl
 The training has five stages
 
 1. [Data](1_data.html) - Where we introduce the example omics dataset we are using from the Cefic MATCHING project [@viant2024demonstrating] 
-2. [Data processing](2_data_processing.html) - Where we read in the processed dataset [@viant2024demonstrating] 
+2. [Data processing](2_data_processing.html) - Where we read in the processed dataset 
 3. [Quality assessments](3_qa.html) - A brief note on quality assessments 
 4. [Differentially abundant molecules - statistical analysis](4_stats.html) - Where we assess the bioactivity of the dataset and generate the input for the grouping 
 5. [Grouping](5_grouping.html)  - Where we use metrics generated from the univariate statistical analysis from the prior step to perform grouping 
