@@ -41,7 +41,7 @@ root <- 'https://raw.githubusercontent.com/michabohealthscience/training-fsa/mai
 
 # Mean comparison plot
 Alternative plot for comparing treatment vs control
-```{r compare_means}
+```{r compare_means, results = "hold"}
 library(dplyr)
 library(ggplot2)
 ctdf <- read.csv('data/ctdf_f2000.csv')
@@ -61,7 +61,7 @@ ctdf %>%
 Below is a function to run a t-test for all the features for a specific test substance.
 
 
-```{r t-test_data_one_assay}
+```{r t-test_data_one_assay, results = "hold"}
 library(reshape2)
 pqn <- read.csv(file.path(root, 'data/HILIC_POS_male/3_pqn.csv'))
 sample_metadata <- read.csv(file.path(root, 'data/HILIC_POS_male/0_sample_metadata_filtered.csv'))
@@ -138,7 +138,7 @@ ttest_per_test_substance <- function(pqn, sample_metadata, test_substance=2){
 
 ```
 
-```{r run_function}
+```{r run_function, results = "hold"}
 ttest_ts2 <- ttest_per_test_substance(pqn, sample_metadata, test_substance=2)
 ```
 
@@ -148,7 +148,7 @@ ttest_ts2 <- ttest_per_test_substance(pqn, sample_metadata, test_substance=2)
 
 We can also represent the data using PCA
 
-```{r PCA_unblind, fig.height=6, fig.width=8}
+```{r PCA_unblind, fig.height=6, fig.width=8, results = "hold"}
 library(ggplot2)
 
 
@@ -190,8 +190,5 @@ ggplot(pca_df, aes(PC1, PC2, color=moa, label=moa)) +
    theme_bw()
 
 ```
-
-
-# References
 
 

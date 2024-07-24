@@ -1,7 +1,7 @@
 name: "omics-grouping-training"
 output_dir: docs
 navbar:
-  title: "omics-grouping-training"
+  title: "Omics-grouping-training"
   left:
     - text: "(1) Data"
       href: 1_data.html

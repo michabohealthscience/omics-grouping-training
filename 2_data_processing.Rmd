@@ -48,11 +48,11 @@ The full details of the data processing methods are found in the [supplemental m
 The HILIC_POS assay for male rodents was used as an example for this practical with the following relevant data files for the training available on the github site:
 
 
-* **HILIC_POS_male/1_unfiltered.csv** - unfiltered intensity matrix following step 1
-* **HILIC_POS_male/2_filtered.csv** - filtered (both samples and features) intensity matrix following steps 1-6
-* **HILIC_POS_male/3_pqn.csv** - PQN normalised intensity matrix following steps 1-7
-* **HILIC_POS_male/4_mv_imputed.csv** - missing value imputed intensity matrix following steps 1-8
-* **HILIC_POS_male/5_glog.csv** - glog intensity matrix following steps 1-9
+* **data/HILIC_POS_male/1_unfiltered.csv** - unfiltered intensity matrix following step 1
+* **data/HILIC_POS_male/2_filtered.csv** - filtered (both samples and features) intensity matrix following steps 1-6
+* **data/HILIC_POS_male/3_pqn.csv** - PQN normalised intensity matrix following steps 1-7
+* **data/HILIC_POS_male/4_mv_imputed.csv** - missing value imputed intensity matrix following steps 1-8
+* **data/HILIC_POS_male/5_glog.csv** - glog intensity matrix following steps 1-9
 
 
 
@@ -74,7 +74,9 @@ root <- '.'
 
 
 ```{r hilic_pos_intensity_unfiltered}
-hilic_pos_all <- read.csv(file.path(root, 'data/HILIC_POS_male/1_unfiltered.csv'))
+hilic_pos_all <- read.csv(file.path(root, 'data/HILIC_POS_male/1_unfiltered.csv'), row.names = 1)
+
+
 ```
 
 Again, head can be used for a quick check while View can be used to obtain more detail.
@@ -88,18 +90,17 @@ Let’s check how many samples and features we have for this data matrix.
 # feature count
 feature_c_all = nrow(hilic_pos_all)
 # sample count
-samp_c_all = ncol(hilic_pos_all)-1
+samp_c_all = ncol(hilic_pos_all)
 
 feature_c_all
 samp_c_all
-
 ```
 
 We can compare this raw data matrix to the filtered data matrix to see how many features have been removed due to the standard processing steps (i.e. steps 1-6)
 
 
 ```{r hilic_pos_intensity_filtered, results = "hold"}
-hilic_pos_f <- read.csv(file.path(root, 'data/HILIC_POS_male/2_filtered.csv'))
+hilic_pos_f <- read.csv(file.path(root, 'data/HILIC_POS_male/2_filtered.csv'), row.names = 1)
 ```
 
 For this tutorial dataset we should find that only 1 sample was discarded (the blank sample - as it is no longer required for further analysis) and a substantial number of the metabolite features have been removed that were deemed not suitable for further analysis.
@@ -109,16 +110,16 @@ For this tutorial dataset we should find that only 1 sample was discarded (the b
 # feature count
 feature_c_f = nrow(hilic_pos_f)
 # sample count
-samp_c_f = ncol(hilic_pos_f)-1
+samp_c_f = ncol(hilic_pos_f)
 
 
-c('All samples:', samp_c_all)
-c('Samples removed:', samp_c_all-samp_c_f)
-c('Remaining samples:', samp_c_f)
+print(c('All samples:', samp_c_all))
+print(c('Samples removed:', samp_c_all-samp_c_f))
+print(c('Remaining samples:', samp_c_f))
 
-c('All features:', feature_c_all)
-c('Features removed:', feature_c_all-feature_c_f)
-c('remaining features:', feature_c_f)
+print(c('All features:', feature_c_all))
+print(c('Features removed:', feature_c_all-feature_c_f))
+print(c('remaining features:', feature_c_f))
 ```
 
 
