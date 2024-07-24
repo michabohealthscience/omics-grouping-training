@@ -60,29 +60,6 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-/* for pandoc --citeproc since 2.11 */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 
 
@@ -376,169 +353,205 @@ div.tocify {
 </div>
 
 
-<!-- ```{r root_dir_url, echo=FALSE} -->
-<!-- root <- 'https://raw.githubusercontent.com/michabohealthscience/training-fsa/main' -->
-<!-- ``` -->
-<!-- # Data file summary -->
-<!-- * **data/HILIC_POS_male/0_sample_metadata.csv** - sample metadata  -->
-<!-- * **data/HILIC_POS_male/0_feature_metadata.csv** - feature metadata -->
-<!-- * **data/HILIC_POS_male/0_sample_metadata_filtered.csv** - sample metadata (with blank removed) -->
-<!-- * **HILIC_POS_male/1_unfiltered.csv** - unfiltered intensity matrix following step 1 -->
-<!-- * **HILIC_POS_male/2_filtered.csv** - filtered (both samples and features) intensity matrix following steps 1-6 -->
-<!-- * **HILIC_POS_male/3_pqn.csv** - PQN normalised intensity matrix following steps 1-7 -->
-<!-- * **HILIC_POS_male/4_mv_imputed.csv** - missing value imputed intensity matrix following steps 1-8 -->
-<!-- * **HILIC_POS_male/5_glog.csv** - glog intensity matrix following steps 1-9 -->
-<!-- * **data/ctdf_f2000.csv** - example control vs treated dataframe for feature number 2000 -->
-<!-- * **data/ttest_ts2.csv** - t-test results for test substance 2 (both dose treatments) -->
-<!-- * **data/combined_male_tstats.csv** - all t-stats for all test substances and treatements for males -->
-<!-- * **data/unblinded_ordered_names.csv** - unblinded names of the test substances -->
-<!-- * **data/cefic_matching_compounds.csv** - details of the test substances  -->
-<!-- # Mean comparison plot  -->
-<!-- Alternative plot for comparing treatment vs control -->
-<!-- ```{r compare_means} -->
-<!-- library(dplyr) -->
-<!-- library(ggplot2) -->
-<!-- ctdf <- read.csv('data/ctdf_f2000.csv') -->
-<!-- ctdf %>%  -->
-<!--     ggplot(aes(as.factor(control_treated), -->
-<!--                intensity)) +  -->
-<!--     geom_jitter(aes(colour = as.factor(control_treated))) + -->
-<!--     stat_summary(fun.y = mean,  -->
-<!--                  geom = "point") +  -->
-<!--     stat_summary(fun.data = mean_se,   -->
-<!--                  geom = "errorbar")  -->
-<!-- ``` -->
-<!-- # t-test loop  -->
-<!-- Below is a function to run a t-test for all the features for a specific test substance. -->
-<!-- ```{r t-test_data_one_assay} -->
-<!-- library(reshape2) -->
-<!-- pqn <- read.csv(file.path(root, 'data/HILIC_POS_male/3_pqn.csv')) -->
-<!-- sample_metadata <- read.csv(file.path(root, 'data/HILIC_POS_male/0_sample_metadata_filtered.csv')) -->
-<!-- ttest_per_test_substance <- function(pqn, sample_metadata, test_substance=2){ -->
-<!--     pqn_t <- data.frame(t(pqn[,-1])) -->
-<!--     colnames(pqn_t) <- pqn$feature_name -->
-<!--     pqn_t$sample_name <- rownames(pqn_t) -->
-<!--     pqn_long <- melt(pqn_t, id.vars=c('sample_name')) -->
-<!--     pqn_long <- merge(pqn_long, sample_metadata[,c('sample_name', 'test_substance', 'dose_group')], on='sample_name') -->
-<!--     pqn_long <- pqn_long[pqn_long$test_substance != "QC",] -->
-<!--     pqn_long$test_substance <- as.numeric(pqn_long$test_substance) -->
-<!--     pqn_long$dose <- as.numeric(pqn_long$dose) -->
-<!--     pqn_long$value <- as.numeric(pqn_long$value) -->
-<!--     # Just check test substance 1 -->
-<!--     pqn_long <- pqn_long[pqn_long$test_substance == test_substance | pqn_long$dose_group == 0, ] -->
-<!--     ttest_l = list() -->
-<!--     feature_names <- pqn$feature_name -->
-<!--     doses <- c(1,2) -->
-<!--     n = 0 -->
-<!--     for (dose in doses){ -->
-<!--       for (feature in feature_names){ -->
-<!--         n = n + 1 -->
-<!--         if (n %% 1000 == 0 || n == 1){ -->
-<!--           print(c(n, 'of', length(feature_names)*length(doses))) -->
-<!--         } -->
-<!--         treated <- pqn_long[pqn_long$dose_group == dose & -->
-<!--                             pqn_long$variable == feature,] -->
-<!--         control <- pqn_long[pqn_long$dose_group == 0 & -->
-<!--                             pqn_long$variable == feature,] -->
-<!--         # Specify that we need 3 or more samples in both the treated and control condition -->
-<!--         if (sum(!is.na(treated$value)) > 2 && sum(!is.na(control$value)) > 2){ -->
-<!--               ttest_out <- t.test(treated$value, control$value) -->
-<!--               if (mean(control$value, na.rm=T) > 0){ -->
-<!--                 fc <- mean(treated$value, na.rm=T) / mean(control$value, na.rm=T)   -->
-<!--               }else{ -->
-<!--                 fc <- NA -->
-<!--               } -->
-<!--               ttest_l[[n]] <- c(feature, dose, ttest_out$p.value, ttest_out$statistic, fc) -->
-<!--         }else{ -->
-<!--           ttest_l[[n]] <- c(feature, dose, NA, NA, NA) -->
-<!--         } -->
-<!--       } -->
-<!--     } -->
-<!--     ttest_df <- data.frame(Reduce(rbind, ttest_l)) -->
-<!--     colnames(ttest_df) <- c('feature_name', 'dose', 'pvalue', 'tstat', 'fc') -->
-<!--     ttest_df$pvalue <- as.numeric(ttest_df$pvalue) -->
-<!--     ttest_df$tstat <- as.numeric(ttest_df$tstat) -->
-<!--     ttest_df$fc <- as.numeric(ttest_df$fc) -->
-<!--     ttest_df <- ttest_df[!is.na(ttest_df$pvalue),] -->
-<!--     rownames(ttest_df) <- NULL -->
-<!--     return(ttest_df) -->
-<!-- } -->
-<!-- ``` -->
-<!-- ```{r run_function} -->
-<!-- ttest_ts2 <- ttest_per_test_substance(pqn, sample_metadata, test_substance=2) -->
-<!-- ``` -->
-<!-- # t-stat - PCA -->
-<!-- We can also represent the data using PCA  -->
-<!-- ```{r PCA_unblind, fig.height=6, fig.width=8} -->
-<!-- library(ggplot2) -->
-<!-- tstats <- read.csv(file.path(root, 'data/combined_male_tstats.csv'), row.names = 1) -->
-<!-- tstats_scaled <- scale(tstats, center=FALSE, scale=TRUE) -->
-<!-- unblinded_names <- read.csv(file.path(root, 'data/unblinded_ordered_names.csv'), header = TRUE) -->
-<!-- colnames(tstats) <- unblinded_names$full_label -->
-<!-- tstats_scaled <- scale(tstats, center=FALSE, scale=TRUE) -->
-<!-- # transpose as features should be columns -->
-<!-- tstats_scaled_t <- data.frame(t(tstats_scaled)) -->
-<!-- # Simply giving missing values a value of zero (but in practice this should be looked into more -->
-<!-- # closely and missing value imputed approaches can be used -->
-<!-- tstats_scaled_t[is.na(tstats_scaled_t)] <- 0 -->
-<!-- # remove features with no response -->
-<!-- tstats_scaled_t_rm0 <- tstats_scaled_t[, colSums(tstats_scaled_t != 0) > 0] -->
-<!-- # Run PCA -->
-<!-- pca_tstats <- prcomp(tstats_scaled_t_rm0, center = TRUE, scale. = TRUE) -->
-<!-- summ <- summary(pca_tstats) -->
-<!-- tstats_scaled_t_rm0$full_label <- rownames(tstats_scaled_t_rm0) -->
-<!-- pca_df <- data.frame(cbind(pca_tstats$x[,1:2], unblinded_names)) -->
-<!-- # Plot the PCA -->
-<!-- ggplot(pca_df, aes(PC1, PC2, color=moa, label=moa)) +  -->
-<!--    geom_text(aes(label = compound_name_dose), hjust = 0.5,  vjust = -1) + -->
-<!--    geom_point(aes(color=moa)) + -->
-<!--    stat_ellipse(geom = "polygon", aes(fill = after_scale(alpha(colour, 0.3))))+ -->
-<!--    scale_colour_manual(values=c("orange","black","blue"))+ -->
-<!--    xlab(paste("PC1 (", round(summ$importance[2,1]*100,1), "%)", sep='')) + -->
-<!--    ylab(paste("PC2 (", round(summ$importance[2,2]*100,1), "%)", sep='')) + -->
-<!--    theme_bw() -->
-<!-- ``` -->
-<div id="acknowledgements" class="section level1">
-<h1>Acknowledgements</h1>
-<p>The mass spectrometry data processing workflow was developed by the
-University of Birmingham Viant Research group and the Phenome Centre
-Birmingham (PCB). See associated relevant publications and packages:</p>
+<div id="data-file-summary" class="section level1">
+<h1>Data file summary</h1>
 <ul>
-<li><strong>Struct</strong> - the R framework developed and use for the
-metabolomics analysis (<a
-href="https://bioconductor.org/packages/release/bioc/html/struct.html">struct</a>,
-<a
-href="https://www.bioconductor.org/packages/release/bioc/html/structToolbox.html">structToolbox</a>)
-<span class="citation">(<a href="#ref-lloyd2020struct">Lloyd, Jankevics,
-and Weber 2020</a>)</span></li>
-<li><strong>pmp</strong> - the R package used for peak matrix processing
-<a
-href="https://bioconductor.org/packages/release/bioc/html/pmp.html">(pmp)</a>.
-,</li>
-<li><strong>xenobiotic filtering</strong> the paper describing the
-xenobiotic filtering approach <span class="citation">(<a
-href="#ref-bowen2023simultaneously">Bowen et al. 2023</a>)</span></li>
+<li><strong>data/HILIC_POS_male/0_sample_metadata.csv</strong> - sample
+metadata</li>
+<li><strong>data/HILIC_POS_male/0_feature_metadata.csv</strong> -
+feature metadata</li>
+<li><strong>data/HILIC_POS_male/0_sample_metadata_filtered.csv</strong>
+- sample metadata (with blank removed)</li>
+<li><strong>HILIC_POS_male/1_unfiltered.csv</strong> - unfiltered
+intensity matrix following step 1</li>
+<li><strong>HILIC_POS_male/2_filtered.csv</strong> - filtered (both
+samples and features) intensity matrix following steps 1-6</li>
+<li><strong>HILIC_POS_male/3_pqn.csv</strong> - PQN normalised intensity
+matrix following steps 1-7</li>
+<li><strong>HILIC_POS_male/4_mv_imputed.csv</strong> - missing value
+imputed intensity matrix following steps 1-8</li>
+<li><strong>HILIC_POS_male/5_glog.csv</strong> - glog intensity matrix
+following steps 1-9</li>
+<li><strong>data/ctdf_f2000.csv</strong> - example control vs treated
+dataframe for feature number 2000</li>
+<li><strong>data/ttest_ts2.csv</strong> - t-test results for test
+substance 2 (both dose treatments)</li>
+<li><strong>data/combined_male_tstats.csv</strong> - all t-stats for all
+test substances and treatements for males</li>
+<li><strong>data/unblinded_ordered_names.csv</strong> - unblinded names
+of the test substances</li>
+<li><strong>data/cefic_matching_compounds.csv</strong> - details of the
+test substances</li>
 </ul>
 </div>
-<div id="references" class="section level1 unnumbered">
-<h1 class="unnumbered">References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent"
-entry-spacing="0">
-<div id="ref-bowen2023simultaneously" class="csl-entry">
-Bowen, Tara J, Andrew D Southam, Andrew R Hall, Ralf JM Weber, Gavin R
-Lloyd, Ruth Macdonald, Amanda Wilson, Amy Pointon, and Mark R Viant.
-2023. <span>“Simultaneously Discovering the Fate and Biochemical Effects
-of Pharmaceuticals Through Untargeted Metabolomics.”</span> <em>Nature
-Communications</em> 14 (1): 4653.
+<div id="mean-comparison-plot" class="section level1">
+<h1>Mean comparison plot</h1>
+<p>Alternative plot for comparing treatment vs control</p>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 4.4.1</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(ggplot2)</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.4.1</code></pre>
+<pre class="r"><code>ctdf &lt;- read.csv(&#39;data/ctdf_f2000.csv&#39;)
+ctdf %&gt;%
+    ggplot(aes(as.factor(control_treated),
+               intensity)) +
+    geom_jitter(aes(colour = as.factor(control_treated))) +
+    stat_summary(fun.y = mean,
+                 geom = &quot;point&quot;) +
+    stat_summary(fun.data = mean_se,
+                 geom = &quot;errorbar&quot;)</code></pre>
+<pre><code>## Warning: The `fun.y` argument of `stat_summary()` is deprecated as of ggplot2 3.3.0.
+## ℹ Please use the `fun` argument instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
+<p><img src="6_more_info_files/figure-html/compare_means-1.png" width="672" /></p>
 </div>
-<div id="ref-lloyd2020struct" class="csl-entry">
-Lloyd, Gavin Rhys, Andris Jankevics, and Ralf J M Weber. 2020.
-<span>“<span class="nocase">struct: an R/Bioconductor-based framework
-for standardized metabolomics data analysis and beyond</span>.”</span>
-<em>Bioinformatics</em> 36 (22-23): 5551–52. <a
-href="https://doi.org/10.1093/bioinformatics/btaa1031">https://doi.org/10.1093/bioinformatics/btaa1031</a>.
+<div id="t-test-loop" class="section level1">
+<h1>t-test loop</h1>
+<p>Below is a function to run a t-test for all the features for a
+specific test substance.</p>
+<pre class="r"><code>library(reshape2)</code></pre>
+<pre><code>## Warning: package &#39;reshape2&#39; was built under R version 4.4.1</code></pre>
+<pre class="r"><code>pqn &lt;- read.csv(file.path(root, &#39;data/HILIC_POS_male/3_pqn.csv&#39;))
+sample_metadata &lt;- read.csv(file.path(root, &#39;data/HILIC_POS_male/0_sample_metadata_filtered.csv&#39;))
+
+ttest_per_test_substance &lt;- function(pqn, sample_metadata, test_substance=2){
+    pqn_t &lt;- data.frame(t(pqn[,-1]))
+    colnames(pqn_t) &lt;- pqn$feature_name
+    pqn_t$sample_name &lt;- rownames(pqn_t)
+
+    pqn_long &lt;- melt(pqn_t, id.vars=c(&#39;sample_name&#39;))
+    pqn_long &lt;- merge(pqn_long, sample_metadata[,c(&#39;sample_name&#39;, &#39;test_substance&#39;, &#39;dose_group&#39;)], on=&#39;sample_name&#39;)
+
+    pqn_long &lt;- pqn_long[pqn_long$test_substance != &quot;QC&quot;,]
+    pqn_long$test_substance &lt;- as.numeric(pqn_long$test_substance)
+    pqn_long$dose &lt;- as.numeric(pqn_long$dose)
+    pqn_long$value &lt;- as.numeric(pqn_long$value)
+
+    # Just check test substance 1
+    pqn_long &lt;- pqn_long[pqn_long$test_substance == test_substance | pqn_long$dose_group == 0, ]
+    ttest_l = list()
+    feature_names &lt;- pqn$feature_name
+    doses &lt;- c(1,2)
+
+    n = 0
+    for (dose in doses){
+
+      for (feature in feature_names){
+
+        n = n + 1
+
+        if (n %% 1000 == 0 || n == 1){
+          print(c(n, &#39;of&#39;, length(feature_names)*length(doses)))
+        }
+
+        treated &lt;- pqn_long[pqn_long$dose_group == dose &amp;
+                            pqn_long$variable == feature,]
+
+        control &lt;- pqn_long[pqn_long$dose_group == 0 &amp;
+                            pqn_long$variable == feature,]
+
+        # Specify that we need 3 or more samples in both the treated and control condition
+        if (sum(!is.na(treated$value)) &gt; 2 &amp;&amp; sum(!is.na(control$value)) &gt; 2){
+              ttest_out &lt;- t.test(treated$value, control$value)
+
+              if (mean(control$value, na.rm=T) &gt; 0){
+                fc &lt;- mean(treated$value, na.rm=T) / mean(control$value, na.rm=T)
+              }else{
+                fc &lt;- NA
+              }
+
+              ttest_l[[n]] &lt;- c(feature, dose, ttest_out$p.value, ttest_out$statistic, fc)
+        }else{
+          ttest_l[[n]] &lt;- c(feature, dose, NA, NA, NA)
+        }
+
+      }
+    }
+    ttest_df &lt;- data.frame(Reduce(rbind, ttest_l))
+    colnames(ttest_df) &lt;- c(&#39;feature_name&#39;, &#39;dose&#39;, &#39;pvalue&#39;, &#39;tstat&#39;, &#39;fc&#39;)
+
+    ttest_df$pvalue &lt;- as.numeric(ttest_df$pvalue)
+    ttest_df$tstat &lt;- as.numeric(ttest_df$tstat)
+    ttest_df$fc &lt;- as.numeric(ttest_df$fc)
+
+    ttest_df &lt;- ttest_df[!is.na(ttest_df$pvalue),]
+    rownames(ttest_df) &lt;- NULL
+
+    return(ttest_df)
+}</code></pre>
+<pre class="r"><code>ttest_ts2 &lt;- ttest_per_test_substance(pqn, sample_metadata, test_substance=2)</code></pre>
+<pre><code>## [1] &quot;1&quot;     &quot;of&quot;    &quot;14652&quot;
+## [1] &quot;1000&quot;  &quot;of&quot;    &quot;14652&quot;
+## [1] &quot;2000&quot;  &quot;of&quot;    &quot;14652&quot;
+## [1] &quot;3000&quot;  &quot;of&quot;    &quot;14652&quot;
+## [1] &quot;4000&quot;  &quot;of&quot;    &quot;14652&quot;
+## [1] &quot;5000&quot;  &quot;of&quot;    &quot;14652&quot;
+## [1] &quot;6000&quot;  &quot;of&quot;    &quot;14652&quot;
+## [1] &quot;7000&quot;  &quot;of&quot;    &quot;14652&quot;
+## [1] &quot;8000&quot;  &quot;of&quot;    &quot;14652&quot;
+## [1] &quot;9000&quot;  &quot;of&quot;    &quot;14652&quot;
+## [1] &quot;10000&quot; &quot;of&quot;    &quot;14652&quot;
+## [1] &quot;11000&quot; &quot;of&quot;    &quot;14652&quot;
+## [1] &quot;12000&quot; &quot;of&quot;    &quot;14652&quot;
+## [1] &quot;13000&quot; &quot;of&quot;    &quot;14652&quot;
+## [1] &quot;14000&quot; &quot;of&quot;    &quot;14652&quot;</code></pre>
 </div>
+<div id="t-stat---pca" class="section level1">
+<h1>t-stat - PCA</h1>
+<p>We can also represent the data using PCA</p>
+<pre class="r"><code>library(ggplot2)
+
+
+tstats &lt;- read.csv(file.path(root, &#39;data/combined_male_tstats.csv&#39;), row.names = 1)
+
+tstats_scaled &lt;- scale(tstats, center=FALSE, scale=TRUE)
+
+unblinded_names &lt;- read.csv(file.path(root, &#39;data/unblinded_ordered_names.csv&#39;), header = TRUE)
+colnames(tstats) &lt;- unblinded_names$full_label
+
+tstats_scaled &lt;- scale(tstats, center=FALSE, scale=TRUE)
+
+# transpose as features should be columns
+tstats_scaled_t &lt;- data.frame(t(tstats_scaled))
+
+# Simply giving missing values a value of zero (but in practice this should be looked into more
+# closely and missing value imputed approaches can be used
+tstats_scaled_t[is.na(tstats_scaled_t)] &lt;- 0
+
+# remove features with no response
+tstats_scaled_t_rm0 &lt;- tstats_scaled_t[, colSums(tstats_scaled_t != 0) &gt; 0]
+
+# Run PCA
+pca_tstats &lt;- prcomp(tstats_scaled_t_rm0, center = TRUE, scale. = TRUE)
+summ &lt;- summary(pca_tstats)
+tstats_scaled_t_rm0$full_label &lt;- rownames(tstats_scaled_t_rm0)
+
+pca_df &lt;- data.frame(cbind(pca_tstats$x[,1:2], unblinded_names))
+
+# Plot the PCA
+ggplot(pca_df, aes(PC1, PC2, color=moa, label=moa)) +
+   geom_text(aes(label = compound_name_dose), hjust = 0.5,  vjust = -1) +
+   geom_point(aes(color=moa)) +
+   stat_ellipse(geom = &quot;polygon&quot;, aes(fill = after_scale(alpha(colour, 0.3))))+
+   scale_colour_manual(values=c(&quot;orange&quot;,&quot;black&quot;,&quot;blue&quot;))+
+   xlab(paste(&quot;PC1 (&quot;, round(summ$importance[2,1]*100,1), &quot;%)&quot;, sep=&#39;&#39;)) +
+   ylab(paste(&quot;PC2 (&quot;, round(summ$importance[2,2]*100,1), &quot;%)&quot;, sep=&#39;&#39;)) +
+
+   theme_bw()</code></pre>
+<p><img src="6_more_info_files/figure-html/PCA_unblind-1.png" width="768" /></p>
 </div>
+<div id="references" class="section level1">
+<h1>References</h1>
 </div>
 
 
