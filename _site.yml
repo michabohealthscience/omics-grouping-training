@@ -1,0 +1,18 @@
+name: "omics-grouping-training"
+output_dir: docs
+navbar:
+  title: "omics-grouping-training"
+  left:
+    - text: "(1) Data"
+      href: 1_data.html
+    - text: "(2) Data processing"
+      href: 2_data_processing.html
+    - text: "(3) QA"
+      href: 3_qa.html
+    - text: "(4) Differentially abundant molecules - statistical analysis"
+      href: 4_stats.html
+    - text: "(5) Grouping"
+      href: 5_grouping.html
+    - text: "(6) More info"
+      href: 6_more_info.html
+

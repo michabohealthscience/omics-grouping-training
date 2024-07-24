@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Differentially abundant molecules - statistical analysis</title>
+
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">omics-grouping-training</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="1_data.html">(1) Data</a>
+</li>
+<li>
+  <a href="2_data_processing.html">(2) Data processing</a>
+</li>
+<li>
+  <a href="3_qa.html">(3) QA</a>
+</li>
+<li>
+  <a href="4_stats.html">(4) Differentially abundant molecules - statistical analysis</a>
+</li>
+<li>
+  <a href="5_grouping.html">(5) Grouping</a>
+</li>
+<li>
+  <a href="6_more_info.html">(6) More info</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Differentially abundant molecules -
+statistical analysis</h1>
+
+</div>
+
+
+<div id="statistical-analysis-in-metabolomics" class="section level1">
+<h1>Statistical analysis in metabolomics</h1>
+<p>For most metabolomics studies, one or more of the following
+approaches at statistically interpreting the data will be used:</p>
+<ul>
+<li>Univariate statistics - where each feature is assessed independently
+(e.g., t-test).</li>
+<li>Multivariate (unsupervised) - where features are assessed together
+and without the use of training data (e.g., PCA)</li>
+<li>Multivariate (supervised) - where features are assessed together and
+with the use of labelled training data (e.g., PLS-DA)</li>
+</ul>
+<p>In this tutorial we will first use unsupervised multivariate analysis
+(principal component analysis - “PCA”) to assess intensity data and then
+use univariate analysis (t-tests) to assess the diﬀerentially abundant
+molecules among chemical treatment samples compared to the control for
+each experimental condition.</p>
+</div>
+<div id="pca-of-intensity" class="section level1">
+<h1>PCA of intensity</h1>
+<p>PCA is an unsupervised multivariate statistical approach that is used
+throughout the analysis of the metabolomics data. It transforms the high
+dimensionality of 1000s of features to be viewed by a smaller number of
+‘principal components’ that still contain most of the information within
+the complete set. These principal components are new variables
+constructed from linear combinations of the initial features where the
+first few principal components have the maximum amount of explained
+variation.</p>
+<p>PCA has multiple applications (e.g., to assess data quality), to
+identify outliers, and to check each step in the data processing (all of
+which was done with this dataset by Phenome Centre Birmingham and used
+directly in the interpretation of the biological activity).</p>
+<p>Here, we will be looking at data that has already been checked for
+data quality (including QC samples and outlier samples), and we are now
+assessing what we believe is valid bioactivity.</p>
+<pre class="r"><code># Read in the sample metadata and processed data matrix
+sample_metadata &lt;- read.csv(file.path(root, &#39;data/HILIC_POS_male/0_sample_metadata_filtered.csv&#39;))
+glog &lt;- read.csv(file.path(root, &#39;data/HILIC_POS_male/5_glog.csv&#39;), row.names = 1)</code></pre>
+<p>The PCA function within R <code>prcomp</code> needs to have the
+samples as rows and the features as columns. So next, we need to
+transpose the data.</p>
+<pre class="r"><code># transpose 
+glog_t &lt;- t(glog)</code></pre>
+<p>Now, let’s remove the QC samples, as they have already been used for
+the quality assessments and are no longer required.</p>
+<pre class="r"><code>qc_names &lt;- sample_metadata[,1][sample_metadata$Class==&#39;QC&#39;]
+sample_metadata_no_qcs &lt;- sample_metadata[sample_metadata$Class!=&#39;QC&#39;,]
+
+glog_t_no_qcs &lt;- glog_t[!rownames(glog_t) %in% qc_names,]</code></pre>
+<p>OK… finally we are ready to perform the PCA.</p>
+<pre class="r"><code>pca_no_qcs &lt;- prcomp(glog_t_no_qcs, center = TRUE, scale. = TRUE)</code></pre>
+<p>We can plot the results by using the <code>ggfortify</code> function,
+which automatically knows what to plot for PCA outputs from
+<code>prcomp</code>.</p>
+<pre class="r"><code>library(ggfortify)</code></pre>
+<pre><code>## Warning: package &#39;ggfortify&#39; was built under R version 4.4.1</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.4.1</code></pre>
+<pre class="r"><code># the x and y variable can be adjusted to show compare different principal components
+
+autoplot(pca_no_qcs, x=1, y=2, data=sample_metadata_no_qcs, colour=&quot;test_substance&quot;,  shape=&quot;dose_group&quot;, frame=TRUE, frame.colour = &#39;test_substance&#39;)+
+  scale_colour_manual(values=c(&quot;khaki&quot;,&quot;black&quot;,&quot;blue&quot;, &#39;red&#39;, &quot;grey&quot;,&#39;orange&#39;, &#39;magenta&#39;, &#39;yellow&#39;, &#39;green&#39;, &#39;brown&#39;, &#39;purple&#39;))+
+  scale_fill_manual(values=c(&quot;khaki&quot;,&quot;black&quot;,&quot;blue&quot;, &#39;red&#39;, &quot;grey&quot;,&#39;orange&#39;, &#39;magenta&#39;, &#39;yellow&#39;, &#39;green&#39;, &#39;brown&#39;, &#39;purple&#39;))+
+  scale_shape_manual(values=c(4,8,2))+
+  theme_bw()</code></pre>
+<p><img src="4_stats_files/figure-html/hilic_pos_glog_pca_plot-1.png" width="672" /></p>
+<blockquote>
+<p>Whilst the above is useful and we can see groups emerging - we are
+interested in how similar each test substance treatment is compared to
+the control. So let’s look at that in more detail</p>
+</blockquote>
+</div>
+<div id="student-t-test" class="section level1">
+<h1>Student t-test</h1>
+<p>Here, we will employ a commonly used univariate (two-tailed)
+statistical test for significant differences observed between the mean
+intensity value of a feature when comparing treated samples versus
+control conditions.</p>
+<p>There are two key metrics we will be using:</p>
+<ul>
+<li><strong>t-statistic (or t-value)</strong></li>
+<li><strong>p-value</strong></li>
+</ul>
+<p><img src="t-test.png" /></p>
+<p> </p>
+<p>We will be using the probabilistic quotient normalization (PQN)
+intensity matrix for this analysis (so missing value imputation and glog
+have not been applied to the matrix).</p>
+<pre class="r"><code>pqn &lt;- read.csv(file.path(root, &#39;data/HILIC_POS_male/3_pqn.csv&#39;))</code></pre>
+<p>Let’s start with doing a single t-test for one feature under one
+experimental condition versus control.</p>
+<pre class="r"><code># Get all the control samples (i.e. all those with dose 0)
+control_samples &lt;- sample_metadata[,1][sample_metadata$dose_group==0]
+
+# Get the high dose group (2) for test substance 1
+ts1_dose_2_samples &lt;- sample_metadata[,1][sample_metadata$dose_group==2 &amp; sample_metadata$test_substance==1]
+
+# Select the 2000th feature as an example
+f2000 &lt;- pqn[2000,]
+
+
+controldf &lt;- data.frame(intensity = unlist(f2000[,control_samples]), control_treated = &#39;control&#39;)
+
+treateddf &lt;- data.frame(intensity = unlist(f2000[,ts1_dose_2_samples]), control_treated = &#39;treated&#39;)
+
+# Perform a t-test for this feature subset based on the chosen samples
+ttest_out &lt;- t.test(treateddf$intensity, controldf$intensity)
+
+ttest_out</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  treateddf$intensity and controldf$intensity
+## t = 5.0365, df = 5.033, p-value = 0.003906
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##   4768483 14670437
+## sample estimates:
+## mean of x mean of y 
+##  15288006   5568546</code></pre>
+<p>Based on this result, we can conclude that the means for the treated
+samples versus control samples are significantly diﬀerent from one
+another for this feature. This diﬀerence is made obvious by visualising
+the data as well.</p>
+<pre class="r"><code>ctdf &lt;- rbind(controldf, treateddf)
+mean_values &lt;- aggregate(ctdf$intensity, by = list(ctdf$control_treated), FUN = mean)
+boxplot(intensity ~ control_treated, data = ctdf, frame = FALSE,  main=f2000[&#39;feature_name&#39;])</code></pre>
+<p><img src="4_stats_files/figure-html/boxplot_data_one_feature-1.png" width="672" /></p>
+<p>We can run multiple t-test in a function to conduct the t-test for
+all features for a specific test substance treatment. Moreover, we can
+also calculate the fold change diﬀerence between the control and treated
+means.</p>
+<blockquote>
+<p><strong>NOTE</strong> - a function to do this is provided in the <a
+href="6_more_info.html"><strong>More info</strong></a> tab. If you
+already have some experience with R, feel free to run yourself otherwise
+just load in the output below.</p>
+</blockquote>
+<p>See below for a data frame of all the t-stats, p-values and fold
+changes calculated for test substance 2 (TS2).</p>
+<pre class="r"><code>ttest_ts2 &lt;- read.csv(file.path(root, &#39;data/ttest_ts2.csv&#39;))</code></pre>
+<p>Let’s have a quick check of this dataframe.</p>
+<pre class="r"><code>sum(ttest_ts2$pvalue&lt;0.05)</code></pre>
+<pre><code>## [1] 2903</code></pre>
+<p>Multiple testing correction is recommended when performing multiple
+t-tests to reduce the false positive results.</p>
+<p>Let’s use the the <code>p.adjust</code> function to calculate
+adjusted p-values (i.e., q-values) with the fdr method (i.e., the
+Benjamini &amp; Hochberg approach).</p>
+<pre class="r"><code>ttest_ts2$qvalue &lt;- p.adjust(ttest_ts2$pvalue, method = &#39;fdr&#39;)
+sum(ttest_ts2$qvalue&lt;0.05)</code></pre>
+<pre><code>## [1] 678</code></pre>
+<p>So, for this test substance we know we have many metabolite features
+changing significantly in their average abundance.</p>
+<p>Let’s visualise these results using a volcano plot to give a better
+idea of the number and the magnitude of differentially abundant
+metabolites that are increasing or decreasing in abundance in response
+to the chemical treatment at the two different doses used.</p>
+<pre class="r"><code>ttest_ts2$diff &lt;- &#39;NONE&#39;
+ttest_ts2$diff[ttest_ts2$tstat&lt;0 &amp; ttest_ts2$qvalue&lt;0.05] &lt;- &#39;DOWN&#39;
+ttest_ts2$diff[ttest_ts2$tstat&gt;0 &amp; ttest_ts2$qvalue&lt;0.05] &lt;- &#39;UP&#39;
+
+
+ggplot(data=ttest_ts2, aes(x=log2(fc), y=-log10(qvalue), col=diff)) +
+        geom_point() + 
+        theme_minimal() +
+        scale_color_manual(values=c(&quot;blue&quot;, &quot;black&quot;, &quot;red&quot;)) +
+        geom_vline(xintercept=c(-0.6, 0.6), col=&quot;red&quot;) +
+        geom_hline(yintercept=-log10(0.05), col=&quot;red&quot;) +
+        facet_grid(cols = vars(dose))+
+        theme(legend.position=&quot;bottom&quot;)</code></pre>
+<p><img src="4_stats_files/figure-html/multiple_testing_correction-1.png" width="672" /></p>
+</div>
+<div id="summary-of-t-tests" class="section level1">
+<h1>Summary of t-tests</h1>
+<p>What about all the other test substances and other assays?</p>
+<p>Rather than repeating this exercise for all the test substances and
+assays in this training, we have a data file already created with the
+relevant t-stats that we can use for grouping in the next section.</p>
+<p>Below, we show a summary of all the t-test analyses done across all
+assays.</p>
+<p>This was used as a manual check to see if any of the test substance
+treatments were not exhibiting appropriate bioactivity, and a decision
+was made on whether to include these treatments in the grouping
+analysis.</p>
+<p>Following a review of the data, it was deemed that, for the male
+component, there was suﬃcient bioactivity to proceed with grouping
+without removing any test substance treatments. For the female data,
+however, treatment groups were removed.</p>
+<p><img src="ttest_summary.png" /></p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

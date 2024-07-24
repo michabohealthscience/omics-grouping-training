@@ -1,0 +1,141 @@
+---
+title: "Bioactivity-based grouping"
+#subtitle: "Introductory practical experience in conducting omics-based grouping"
+authors: "Michabo Health Science Ltd"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_collapsed: true
+    toc_depth: 3
+    number_sections: false
+link-citations: true
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r root_dir_url,  echo=FALSE}
+root <- 'https://raw.githubusercontent.com/michabohealthscience/training-fsa/main'
+```
+
+
+```{r root_dir, echo=FALSE}
+root <- '.'
+```
+
+
+
+# t-statistic grouping
+We finally made it to the grouping!
+
+For the Michabo Health Science workflow grouping, we use the t-statistic calculated from the previous sections. A similar approach as performed in @gruszczynska2024multi.
+
+Let’s read into R the combined t-stats calculated for each assay, test substance and dose for male rodents.
+
+
+
+```{r read_in_data_grouping}
+tstats <- read.csv(file.path(root, 'data/combined_male_tstats.csv'), row.names = 1)
+
+```
+
+
+Now we vector normalise on each treatment condition using the `scale` function which will divide each treated condition by the square root of the sum of the squared t-statistics for all features of that condition.
+
+This is performed to attempt to minimise the impact of the "potency" of each test substance.
+
+
+```{r rscaling}
+tstats_scaled <- scale(tstats, center=FALSE, scale=TRUE)
+
+```
+
+
+# Hierarchical Cluster Analysis (HCA) on t-statistics
+
+Our grouping will focus on Hierarchical Cluster Analysis (HCA) on the t-statistics. See below for some general principles on HCA.
+
+
+![](hca_explained.png)
+
+&nbsp;
+&nbsp;
+
+We will be using a package called `pvclust` to perform the HCA, which calculates some additional measures of confidence that we will explore later.
+
+Let’s run the grouping with pvclust by using Euclidean distance matrix and the ‘Ward.D2’ method for clustering (i.e. linkage method).
+
+See the following link for [further details on linkage methods](https://i2.wp.com/dataaspirant.com/wp-content/uploads/2020/12/15-Hierarchical-Clustering-Linkages.png?resize=609%2C659&ssl=1)).
+
+```{r HCA_blind}
+library(pvclust)
+pvclust_res <- pvclust(tstats_scaled, method.dist="euclidean", method.hclust = "ward.D2", nboot=100)
+
+plot(pvclust_res, c("si", "au", "bp"), hang=-1)
+
+
+```
+
+
+
+# Unblinding - compound and mode of action details
+
+
+
+```{r table, tidy=FALSE, echo=FALSE}
+data <- read.csv(file.path(root, 'data/cefic_matching_compounds.csv'), stringsAsFactors = FALSE, header = TRUE, check.names=FALSE)
+knitr::kable((data), booktabs = TRUE,
+caption = 'Table 5.1: Cefic MATCHING unblinded test substances')
+```
+
+&nbsp;
+
+
+![Cefic MATCHING unblinded - summary](cefic_matching_compounds.png)
+
+&nbsp;
+
+
+# t-stat - HCA - unblinded
+
+Let’s do that again, but this time with unblinded labelled columns.
+
+```{r HCA_unblind, fig.height=8, fig.width=8}
+library(pvclust)
+unblinded_names <- read.csv(file.path(root, 'data/unblinded_ordered_names.csv'), header = TRUE)
+pvclust_res_unblind <- pvclust_res
+unblinded_names_sorted <- unblinded_names[match(pvclust_res$hclust$labels, unblinded_names$test_substance_dose), ]  
+pvclust_res_unblind$hclust$labels <- unblinded_names_sorted$compound_name_dose_moa
+plot(pvclust_res_unblind, c("si", "au", "bp"), hang=-1)
+
+```
+
+
+
+# Assessing confidence in the grouping hypothesis
+
+
+
+![](confidence_in_hca.png)
+&nbsp;
+
+
+
+
+# Chemical grouping using structure only
+
+Let’s finally compare the results of the omics-based grouping to a grouping result using chemical structure only. See below for the same HCA approach but instead of using t-statistics for the grouping we are using structural fingerprints of the test substance.
+
+
+![Cefic MATCHING compound HCA (MACCS fingerprints)](cefic_matching_compounds_hca_maccs.png)
+
+&nbsp;
+
+
+
+# References
+

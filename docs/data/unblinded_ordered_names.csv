@@ -1,0 +1,17 @@
+,test_substance,dose_group,compound_name,cas,moa,moa_short,effect_strength,label_name,full_label,compound_name_dose,compound_name_dose_moa,test_substance_dose
+1,TS1,L,Wy 14643,50892-23-4,Peroxisome proliferation (PP),PP,Strong,Wy 14643 (PP +++),TS1 L | Wy 14643 (PP +++),Wy 14643 (L),Wy 14643 (PP) L,TS1_L
+2,TS1,H,Wy 14643,50892-23-4,Peroxisome proliferation (PP),PP,Strong,Wy 14643 (PP +++),TS1 H | Wy 14643 (PP +++),Wy 14643 (H),Wy 14643 (PP) H,TS1_H
+3,TS2,L,4-Chloro-3-nitroaniline,635-22-3,Anemia,Anemia,Moderate,4-Chloro-3-nitroaniline (Anemia ++),TS2 L | 4-Chloro-3-nitroaniline (Anemia ++),4-Chloro-3-nitroaniline (L),4-Chloro-3-nitroaniline (Anemia) L,TS2_L
+4,TS2,H,4-Chloro-3-nitroaniline,635-22-3,Anemia,Anemia,Moderate,4-Chloro-3-nitroaniline (Anemia ++),TS2 H | 4-Chloro-3-nitroaniline (Anemia ++),4-Chloro-3-nitroaniline (H),4-Chloro-3-nitroaniline (Anemia) H,TS2_H
+5,TS3,L,17-alpha-Methyltestosterone,58-18-4,Androgen receptor activity (AR),AR,Strong,17-alpha-Methyltestosterone (AR +++),TS3 L | 17-alpha-Methyltestosterone (AR +++),17-alpha-Methyltestosterone (L),17-alpha-Methyltestosterone (AR) L,TS3_L
+6,TS3,H,17-alpha-Methyltestosterone,58-18-4,Androgen receptor activity (AR),AR,Strong,17-alpha-Methyltestosterone (AR +++),TS3 H | 17-alpha-Methyltestosterone (AR +++),17-alpha-Methyltestosterone (H),17-alpha-Methyltestosterone (AR) H,TS3_H
+7,TS4,L,Trenbolone,10161-33-8,Androgen receptor activity (AR),AR,Strong,Trenbolone (AR +++),TS4 L | Trenbolone (AR +++),Trenbolone (L),Trenbolone (AR) L,TS4_L
+8,TS4,H,Trenbolone,10161-33-8,Androgen receptor activity (AR),AR,Strong,Trenbolone (AR +++),TS4 H | Trenbolone (AR +++),Trenbolone (H),Trenbolone (AR) H,TS4_H
+9,TS5,L,Aniline,62-53-3,Anemia,Anemia,Moderate,Aniline (Anemia ++),TS5 L | Aniline (Anemia ++),Aniline (L),Aniline (Anemia) L,TS5_L
+10,TS5,H,Aniline,62-53-3,Anemia,Anemia,Moderate,Aniline (Anemia ++),TS5 H | Aniline (Anemia ++),Aniline (H),Aniline (Anemia) H,TS5_H
+11,TS7,L,Dichlorprop-p,15165-67-0,Peroxisome proliferation (PP),PP,Moderate,Dichlorprop-p (PP ++),TS7 L | Dichlorprop-p (PP ++),Dichlorprop-p (L),Dichlorprop-p (PP) L,TS7_L
+12,TS7,H,Dichlorprop-p,15165-67-0,Peroxisome proliferation (PP),PP,Moderate,Dichlorprop-p (PP ++),TS7 H | Dichlorprop-p (PP ++),Dichlorprop-p (H),Dichlorprop-p (PP) H,TS7_H
+13,TS8,L,2-Chloroaniline,95-51-2,Anemia,Anemia,Weak,2-Chloroaniline (Anemia +),TS8 L | 2-Chloroaniline (Anemia +),2-Chloroaniline (L),2-Chloroaniline (Anemia) L,TS8_L
+14,TS8,H,2-Chloroaniline,95-51-2,Anemia,Anemia,Weak,2-Chloroaniline (Anemia +),TS8 H | 2-Chloroaniline (Anemia +),2-Chloroaniline (H),2-Chloroaniline (Anemia) H,TS8_H
+15,TS9,L,Fenofibrate,49562-28-9,Peroxisome proliferation (PP),PP,Strong,Fenofibrate (PP +++),TS9 L | Fenofibrate (PP +++),Fenofibrate (L),Fenofibrate (PP) L,TS9_L
+16,TS9,H,Fenofibrate,49562-28-9,Peroxisome proliferation (PP),PP,Strong,Fenofibrate (PP +++),TS9 H | Fenofibrate (PP +++),Fenofibrate (H),Fenofibrate (PP) H,TS9_H

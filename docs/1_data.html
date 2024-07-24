@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Data</title>
+
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">omics-grouping-training</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="1_data.html">(1) Data</a>
+</li>
+<li>
+  <a href="2_data_processing.html">(2) Data processing</a>
+</li>
+<li>
+  <a href="3_qa.html">(3) QA</a>
+</li>
+<li>
+  <a href="4_stats.html">(4) Differentially abundant molecules - statistical analysis</a>
+</li>
+<li>
+  <a href="5_grouping.html">(5) Grouping</a>
+</li>
+<li>
+  <a href="6_more_info.html">(6) More info</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Data</h1>
+
+</div>
+
+
+<div id="cefic-matching-metabolomics-data-set" class="section level1">
+<h1>Cefic MATCHING metabolomics data set</h1>
+<p>The tutorial will use data generated as part of the <strong>Cefic
+MATCHING study</strong>. the Its aim was to conduct a blinded
+international ring trial to investigate whether six metabolomics labs,
+each generating, analysing and reporting metabolomics data from a single
+exposure study (rodent plasma), would independently arrive at the same
+grouping hypothesis <span class="citation">(<a
+href="#ref-viant2024demonstrating">Viant et al. 2024</a>)</span>.</p>
+<p><img src="Phenome-Centre-Birmingham.png" width="300" /> Rather than
+using all the data from the Cefic MATCHING study, this tutorial will
+focus only on metabolomics data obtained from sampling the plasma of
+<strong>male</strong> rats and the processed mass spectrometry data
+obtained from a single ring trial labs (<strong>Phenome Centre
+Birmingham</strong>).</p>
+<div class="float">
+<img src="pcb_ms.png" width="300"
+alt="Phenome Centre Birmingham - LC-MS" />
+<div class="figcaption">Phenome Centre Birmingham - LC-MS</div>
+</div>
+<p> </p>
+</div>
+<div id="liquid-chromatography-mass-spectrometry-assays"
+class="section level1">
+<h1>Liquid chromatography mass spectrometry assays</h1>
+<p>Mass spectrometry coupled liquid chromatography (in particular
+high-resolution mass spectrometry with Ultra-high-performance liquid
+chromatography - UHPLC-MS) is an eﬀective and popular approach for
+metabolomics and is what was used for obtaining the data we are using
+for this tutorial.</p>
+<p>Full details of the methods are found in the supplemental materials
+of the Cefic MATCHING publication <a
+href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10944399/bin/204_2024_3680_MOESM1_ESM.pdf">supplemental
+of Cefic MATCHING publication</a> <span class="citation">(<a
+href="#ref-viant2024demonstrating">Viant et al. 2024</a>)</span>.</p>
+<p>The UHPLC−MS approach used for our dataset consisted of four assays,
+comprising two types of chromatography and two mass spectrometry
+ionisation modes (positive and negative). The chromatographic columns
+were either a Hydrophilic Interaction Liquid “HILIC” column (primarily
+to measure polar metabolites) or a C18 column (primarily to measure
+lipids). These data types are labeled in the following way:</p>
+<ul>
+<li>HILIC_POS</li>
+<li>HILIC_NEG</li>
+<li>LIPIDS_POS</li>
+<li>LIPIDS_NEG</li>
+</ul>
+<p>This tutorial focuses only on one assay (<strong>HILIC_POS</strong>)
+for most of the steps in order to make the data analysis more
+manageable.</p>
+<p>The raw data collected from these LC-MS assays generally have three
+dimensions.</p>
+<ul>
+<li><strong>Retention time (RT)</strong>: This is the time at which the
+metabolites are eluted from the chromatography column based on the
+physiochemical properties of the metabolite.</li>
+<li><strong>Mass-to-charge ratio (m/z)</strong>: To obtain m/z, the
+metabolites have been ionised into gas-phase, then separated and
+detected by the mass spectrometer.</li>
+<li><strong>Intensity</strong>: The intensity of each m/z is
+proportional to the number of ions detected.However, without reference
+standards, intensity cannot accurately by used to quantify the
+concentration of metabolites due to various confounding factors (e.g.,
+ion suppression).</li>
+</ul>
+<div class="float">
+<img src="mz_rt_intensity.png" width="400" alt="LC-MS data" />
+<div class="figcaption">LC-MS data</div>
+</div>
+<p> </p>
+</div>
+<div id="sample-metadata" class="section level1">
+<h1>Sample metadata</h1>
+<p>Let’s begin with looking at the metadata for the samples to
+understand the dataset better.</p>
+<p>All files for this practical are downloaded directly from the Github
+repository. See the root URL below.</p>
+<pre class="r"><code>root &lt;- &#39;https://raw.githubusercontent.com/michabohealthscience/omics-grouping-training/main&#39;</code></pre>
+<p>If you are using data downloaded locally, please change the root
+variable to the path where the data are located.</p>
+<p>The sample metadata is stored in a comma-separated text file (.csv).
+We can read this file into R using the read.csv function and by
+specifying the URL path to the ‘.csv’ file. This will save the metadata
+as a dataframe R object.</p>
+<p>If you are using data downloaded locally, please change the root
+variable to the path where the data are located.</p>
+<p>The sample metadata is stored in a comma-separated text file (.csv).
+We can read this file into R using the <code>read.csv</code> function
+and by specifying the URL path to the ‘.csv’ file. This will save the
+metadata as a <code>dataframe</code> R object.</p>
+<pre class="r"><code>sample_metadata_all &lt;- read.csv(file.path(root, &#39;data/HILIC_POS_male/0_sample_metadata.csv&#39;))</code></pre>
+<p>Let’s have a quick look at the sample metadata. We can use the head
+function just to see the first few rows.</p>
+<pre class="r"><code>head(sample_metadata_all)</code></pre>
+<pre><code>##                   sample_name  Class injection_order         PCB_ID
+## 1              RP04_isQC44_pp     QC             123 RP04_isQC44_pp
+## 2              RP04_isQC45_pp     QC             124 RP04_isQC45_pp
+## 3 RP04_TS5_DG1_m_rep01_051_pp Sample             125            X51
+## 4 RP04_TS8_DG2_m_rep01_076_pp Sample             126            X76
+## 5 RP04_TS7_DG1_m_rep01_061_pp Sample             127            X61
+## 6 RP04_TS4_DG1_m_rep01_041_pp Sample             128            X41
+##   tube_barcode animal_number prep_batch prep_order test_substance Sex
+## 1           QC            QC         QC         QC             QC  QC
+## 2           QC            QC         QC         QC             QC  QC
+## 3     12391845            51          2        115              5   M
+## 4     12391870            76          2        120              8   M
+## 5     12391855            61          2        111              7   M
+## 6     12391835            41          2        119              4   M
+##   Sex_binary dose_group biol_rep
+## 1         QC         QC       QC
+## 2         QC         QC       QC
+## 3          2          1        1
+## 4          2          2        1
+## 5          2          1        1
+## 6          2          1        1</code></pre>
+<p>   </p>
+<p>We can use <code>View(sample_metadata_all)</code> in a more user
+friendly manner within RStudio where you can filter the columns.</p>
+<p><img src="RStudio_sample_metadata_view.png" />    </p>
+<p>The following information regarding the independent variables for
+each sample was available to the metabolomics labs prior to
+unblinding:</p>
+<ul>
+<li><strong>Test substances</strong>: TS1, TS2, TS3, TS4, TS5, TS7, TS8,
+TS9</li>
+<li><strong>Doses</strong>: Low (1), High (2)</li>
+<li><strong>Sex</strong>: Male</li>
+</ul>
+<p>(TS = Test Substance; TS6 was excluded before exposures).</p>
+<p>It is important to note that there are Quality Control (QC) samples
+throughout the run. We will touch briefly on this later. All other
+samples are distributed randomly across the run to help counteract any
+drift eﬀects across the UHPLC−MS run.</p>
+<p>For each test substance and dose, there are 5 biological replicates
+(i.e. 5 samples for each experimental treatment) and 1 technical
+replicate for each sample.</p>
+<p>The ‘prep order’ refers to the preparation of the samples (i.e.,
+metabolite extraction). Like with the run order, the preparation order
+was randomized across the samples to help counteract any confounding
+variable eﬀects that may bias the results of the experiment.</p>
+</div>
+<div id="how-much-data-are-we-using" class="section level1">
+<h1>How much data are we using?</h1>
+<p>When we combine all the assays (HILIC_POS, HILIC_NEG, LIPIDS_POS,
+LIPID_NEG) for the male component of the data, we are analysig 28,664
+metabolite features across 90 samples so… 28,664 x 90 = 2,579,760 data
+points!</p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+<div id="ref-viant2024demonstrating" class="csl-entry">
+Viant, Mark R, E Amstalden, T Athersuch, M Bouhifd, S Camuzeaux, DM
+Crizer, P Driemert, et al. 2024. <span>“Demonstrating the Reliability of
+in Vivo Metabolomics Based Chemical Grouping: Towards Best
+Practice.”</span> <em>Archives of Toxicology</em>, 1–13.
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

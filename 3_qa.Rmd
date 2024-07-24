@@ -1,0 +1,68 @@
+---
+title: "QA"
+# subtitle: "Data import"
+authors: "Michabo Health Science Ltd"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_collapsed: true
+    toc_depth: 3
+    number_sections: false
+link-citations: true
+bibliography: references.bib
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# A note on Quality assessments
+
+> **We will skip in our training today!** Assessing the technical quality of the metabolomics assay is **not** the focus this tutorial. However, the trainees should just be aware that the metabolomics data we are using has been assessed at a technical level using quality control samples and the data passes acceptable criteria.
+
+Whenever using omics datasets, suﬃcient quality assessments need to be performed to assess the data quality from a technical perspective.
+
+All 6 of the participating ring trial labs underwent quality assessments, and all but one passed.
+One of the key metrics involved in this assessment is evaluating interstudy quality control samples, which are a pooled sample derived from all other samples. The interstudy QC samples were assessed by using Principal Component Analysis (PCA) and by examining the medium relative standard deviation across all features. Following this evaluation, the data quality from RP8 was deemed not to be suﬃciently high and was thus removed from further analysis [@viant2024demonstrating].
+
+```{r table, tidy=FALSE, echo=FALSE}
+library(formattable)
+library(tidyr)
+library(knitr)
+
+data <- read.csv('cefic_matching_quality_assessments.csv', stringsAsFactors = FALSE, header = TRUE, check.names=FALSE)
+
+highlight <- formattable::color_tile("red","red")
+
+formattable(data,caption = '<b>Table 2.1</b>: Quality assessments of intrastudy QCs and biological samples', list(
+  area(col = 7, row = 1 ) ~ highlight
+  )) 
+
+
+```
+
+
+![**Fig 1.1. Cefic MATCHING quality assessments.** Composite of exemplar PCA scores plots (with Hotelling’s T2 ellipse at 95% confidence interval) from each blinded partner for assessment of LC– MS metabolomics data quality after all processing steps, prior to statistical analysis. Plots demonstrate the low technical variability of the intrastudy QC samples (red circles) relative to the larger biological variability of the study samples (treated and control animals, blue crosses) across all partners. Compared to other partners, the much higher technical variability relative to biological variability observed by partner RP8 (panel f) is evident. The figure is from the cefic MATCHING publication.](cefic_matching_quality_assessments.png)
+
+
+
+&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+## References
+
+
+
+
+

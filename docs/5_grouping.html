@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Bioactivity-based grouping</title>
+
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">omics-grouping-training</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="1_data.html">(1) Data</a>
+</li>
+<li>
+  <a href="2_data_processing.html">(2) Data processing</a>
+</li>
+<li>
+  <a href="3_qa.html">(3) QA</a>
+</li>
+<li>
+  <a href="4_stats.html">(4) Differentially abundant molecules - statistical analysis</a>
+</li>
+<li>
+  <a href="5_grouping.html">(5) Grouping</a>
+</li>
+<li>
+  <a href="6_more_info.html">(6) More info</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Bioactivity-based grouping</h1>
+
+</div>
+
+
+<div id="t-statistic-grouping" class="section level1">
+<h1>t-statistic grouping</h1>
+<p>We finally made it to the grouping!</p>
+<p>For the Michabo Health Science workflow grouping, we use the
+t-statistic calculated from the previous sections. A similar approach as
+performed in <span class="citation">Gruszczynska et al. (<a
+href="#ref-gruszczynska2024multi">2024</a>)</span>.</p>
+<p>Let’s read into R the combined t-stats calculated for each assay,
+test substance and dose for male rodents.</p>
+<pre class="r"><code>tstats &lt;- read.csv(file.path(root, &#39;data/combined_male_tstats.csv&#39;), row.names = 1)</code></pre>
+<p>Now we vector normalise on each treatment condition using the
+<code>scale</code> function which will divide each treated condition by
+the square root of the sum of the squared t-statistics for all features
+of that condition.</p>
+<p>This is performed to attempt to minimise the impact of the “potency”
+of each test substance.</p>
+<pre class="r"><code>tstats_scaled &lt;- scale(tstats, center=FALSE, scale=TRUE)</code></pre>
+</div>
+<div id="hierarchical-cluster-analysis-hca-on-t-statistics"
+class="section level1">
+<h1>Hierarchical Cluster Analysis (HCA) on t-statistics</h1>
+<p>Our grouping will focus on Hierarchical Cluster Analysis (HCA) on the
+t-statistics. See below for some general principles on HCA.</p>
+<p><img src="hca_explained.png" /></p>
+<p>   </p>
+<p>We will be using a package called <code>pvclust</code> to perform the
+HCA, which calculates some additional measures of confidence that we
+will explore later.</p>
+<p>Let’s run the grouping with pvclust by using Euclidean distance
+matrix and the ‘Ward.D2’ method for clustering (i.e. linkage
+method).</p>
+<p>See the following link for <a
+href="https://i2.wp.com/dataaspirant.com/wp-content/uploads/2020/12/15-Hierarchical-Clustering-Linkages.png?resize=609%2C659&amp;ssl=1">further
+details on linkage methods</a>).</p>
+<pre class="r"><code>library(pvclust)</code></pre>
+<pre><code>## Warning: package &#39;pvclust&#39; was built under R version 4.4.1</code></pre>
+<pre class="r"><code>pvclust_res &lt;- pvclust(tstats_scaled, method.dist=&quot;euclidean&quot;, method.hclust = &quot;ward.D2&quot;, nboot=100)</code></pre>
+<pre><code>## Bootstrap (r = 0.5)... Done.
+## Bootstrap (r = 0.6)... Done.
+## Bootstrap (r = 0.7)... Done.
+## Bootstrap (r = 0.8)... Done.
+## Bootstrap (r = 0.9)... Done.
+## Bootstrap (r = 1.0)... Done.
+## Bootstrap (r = 1.1)... Done.
+## Bootstrap (r = 1.2)... Done.
+## Bootstrap (r = 1.3)... Done.
+## Bootstrap (r = 1.4)... Done.</code></pre>
+<pre class="r"><code>plot(pvclust_res, c(&quot;si&quot;, &quot;au&quot;, &quot;bp&quot;), hang=-1)</code></pre>
+<p><img src="5_grouping_files/figure-html/HCA_blind-1.png" width="672" /></p>
+</div>
+<div id="unblinding---compound-and-mode-of-action-details"
+class="section level1">
+<h1>Unblinding - compound and mode of action details</h1>
+<table>
+<caption>Table 5.1: Cefic MATCHING unblinded test substances</caption>
+<colgroup>
+<col width="3%" />
+<col width="21%" />
+<col width="8%" />
+<col width="25%" />
+<col width="12%" />
+<col width="28%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">TS</th>
+<th align="left">Compound</th>
+<th align="left">CAS No.</th>
+<th align="left">MOA</th>
+<th align="left">Effect strength</th>
+<th align="left">Label name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">TS1</td>
+<td align="left">Wy 14643</td>
+<td align="left">50892-23-4</td>
+<td align="left">Peroxisome proliferation (PP)</td>
+<td align="left">Strong</td>
+<td align="left">Wy 14643 (PP +++)</td>
+</tr>
+<tr class="even">
+<td align="left">TS7</td>
+<td align="left">Dichlorprop-p</td>
+<td align="left">15165-67-0</td>
+<td align="left">Peroxisome proliferation (PP)</td>
+<td align="left">Moderate</td>
+<td align="left">Dichlorprop-p (PP ++)</td>
+</tr>
+<tr class="odd">
+<td align="left">TS9</td>
+<td align="left">Fenofibrate</td>
+<td align="left">49562-28-9</td>
+<td align="left">Peroxisome proliferation (PP)</td>
+<td align="left">Strong</td>
+<td align="left">Fenofibrate (PP +++)</td>
+</tr>
+<tr class="even">
+<td align="left">TS3</td>
+<td align="left">17-alpha-Methyltestosterone</td>
+<td align="left">58-18-4</td>
+<td align="left">Androgen receptor activity (AR)</td>
+<td align="left">Strong</td>
+<td align="left">17-alpha-Methyltestosterone (AR +++)</td>
+</tr>
+<tr class="odd">
+<td align="left">TS4</td>
+<td align="left">Trenbolone</td>
+<td align="left">10161-33-8</td>
+<td align="left">Androgen receptor activity (AR)</td>
+<td align="left">Strong</td>
+<td align="left">Trenbolone (AR +++)</td>
+</tr>
+<tr class="even">
+<td align="left">TS2</td>
+<td align="left">4-Chloro-3-nitroaniline</td>
+<td align="left">635-22-3</td>
+<td align="left">Anemia</td>
+<td align="left">Moderate</td>
+<td align="left">4-Chloro-3-nitroaniline (Anemia ++)</td>
+</tr>
+<tr class="odd">
+<td align="left">TS5</td>
+<td align="left">Aniline</td>
+<td align="left">62-53-3</td>
+<td align="left">Anemia</td>
+<td align="left">Moderate</td>
+<td align="left">Aniline (Anemia ++)</td>
+</tr>
+<tr class="even">
+<td align="left">TS8</td>
+<td align="left">2-Chloroaniline</td>
+<td align="left">95-51-2</td>
+<td align="left">Anemia</td>
+<td align="left">Weak</td>
+<td align="left">2-Chloroaniline (Anemia +)</td>
+</tr>
+</tbody>
+</table>
+<p> </p>
+<div class="float">
+<img src="cefic_matching_compounds.png"
+alt="Cefic MATCHING unblinded - summary" />
+<div class="figcaption">Cefic MATCHING unblinded - summary</div>
+</div>
+<p> </p>
+</div>
+<div id="t-stat---hca---unblinded" class="section level1">
+<h1>t-stat - HCA - unblinded</h1>
+<p>Let’s do that again, but this time with unblinded labelled
+columns.</p>
+<pre class="r"><code>library(pvclust)
+unblinded_names &lt;- read.csv(file.path(root, &#39;data/unblinded_ordered_names.csv&#39;), header = TRUE)
+pvclust_res_unblind &lt;- pvclust_res
+unblinded_names_sorted &lt;- unblinded_names[match(pvclust_res$hclust$labels, unblinded_names$test_substance_dose), ]  
+pvclust_res_unblind$hclust$labels &lt;- unblinded_names_sorted$compound_name_dose_moa
+plot(pvclust_res_unblind, c(&quot;si&quot;, &quot;au&quot;, &quot;bp&quot;), hang=-1)</code></pre>
+<p><img src="5_grouping_files/figure-html/HCA_unblind-1.png" width="768" /></p>
+</div>
+<div id="assessing-confidence-in-the-grouping-hypothesis"
+class="section level1">
+<h1>Assessing confidence in the grouping hypothesis</h1>
+<p><img src="confidence_in_hca.png" />  </p>
+</div>
+<div id="chemical-grouping-using-structure-only" class="section level1">
+<h1>Chemical grouping using structure only</h1>
+<p>Let’s finally compare the results of the omics-based grouping to a
+grouping result using chemical structure only. See below for the same
+HCA approach but instead of using t-statistics for the grouping we are
+using structural fingerprints of the test substance.</p>
+<div class="float">
+<img src="cefic_matching_compounds_hca_maccs.png"
+alt="Cefic MATCHING compound HCA (MACCS fingerprints)" />
+<div class="figcaption">Cefic MATCHING compound HCA (MACCS
+fingerprints)</div>
+</div>
+<p> </p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+<div id="ref-gruszczynska2024multi" class="csl-entry">
+Gruszczynska, Hanna, Rosemary E Barnett, Gavin R Lloyd, Ralf JM Weber,
+Thomas N Lawson, Jiarui Zhou, Elena Sostare, John K Colbourne, and Mark
+R Viant. 2024. <span>“Multi-Omics Bioactivity Profile-Based Chemical
+Grouping and Read-Across: A Case Study with Daphnia Magna and Azo
+Dyes.”</span> <em>Archives of Toxicology</em>, 1–12.
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

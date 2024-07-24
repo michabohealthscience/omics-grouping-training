@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Supplemental</title>
+
+<script src="site_libs/header-attrs-2.27/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">omics-grouping-training</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="1_data.html">(1) Data</a>
+</li>
+<li>
+  <a href="2_data_processing.html">(2) Data processing</a>
+</li>
+<li>
+  <a href="3_qa.html">(3) QA</a>
+</li>
+<li>
+  <a href="4_stats.html">(4) Differentially abundant molecules - statistical analysis</a>
+</li>
+<li>
+  <a href="5_grouping.html">(5) Grouping</a>
+</li>
+<li>
+  <a href="6_more_info.html">(6) More info</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Supplemental</h1>
+
+</div>
+
+
+<!-- ```{r root_dir_url, echo=FALSE} -->
+<!-- root <- 'https://raw.githubusercontent.com/michabohealthscience/training-fsa/main' -->
+<!-- ``` -->
+<!-- # Data file summary -->
+<!-- * **data/HILIC_POS_male/0_sample_metadata.csv** - sample metadata  -->
+<!-- * **data/HILIC_POS_male/0_feature_metadata.csv** - feature metadata -->
+<!-- * **data/HILIC_POS_male/0_sample_metadata_filtered.csv** - sample metadata (with blank removed) -->
+<!-- * **HILIC_POS_male/1_unfiltered.csv** - unfiltered intensity matrix following step 1 -->
+<!-- * **HILIC_POS_male/2_filtered.csv** - filtered (both samples and features) intensity matrix following steps 1-6 -->
+<!-- * **HILIC_POS_male/3_pqn.csv** - PQN normalised intensity matrix following steps 1-7 -->
+<!-- * **HILIC_POS_male/4_mv_imputed.csv** - missing value imputed intensity matrix following steps 1-8 -->
+<!-- * **HILIC_POS_male/5_glog.csv** - glog intensity matrix following steps 1-9 -->
+<!-- * **data/ctdf_f2000.csv** - example control vs treated dataframe for feature number 2000 -->
+<!-- * **data/ttest_ts2.csv** - t-test results for test substance 2 (both dose treatments) -->
+<!-- * **data/combined_male_tstats.csv** - all t-stats for all test substances and treatements for males -->
+<!-- * **data/unblinded_ordered_names.csv** - unblinded names of the test substances -->
+<!-- * **data/cefic_matching_compounds.csv** - details of the test substances  -->
+<!-- # Mean comparison plot  -->
+<!-- Alternative plot for comparing treatment vs control -->
+<!-- ```{r compare_means} -->
+<!-- library(dplyr) -->
+<!-- library(ggplot2) -->
+<!-- ctdf <- read.csv('data/ctdf_f2000.csv') -->
+<!-- ctdf %>%  -->
+<!--     ggplot(aes(as.factor(control_treated), -->
+<!--                intensity)) +  -->
+<!--     geom_jitter(aes(colour = as.factor(control_treated))) + -->
+<!--     stat_summary(fun.y = mean,  -->
+<!--                  geom = "point") +  -->
+<!--     stat_summary(fun.data = mean_se,   -->
+<!--                  geom = "errorbar")  -->
+<!-- ``` -->
+<!-- # t-test loop  -->
+<!-- Below is a function to run a t-test for all the features for a specific test substance. -->
+<!-- ```{r t-test_data_one_assay} -->
+<!-- library(reshape2) -->
+<!-- pqn <- read.csv(file.path(root, 'data/HILIC_POS_male/3_pqn.csv')) -->
+<!-- sample_metadata <- read.csv(file.path(root, 'data/HILIC_POS_male/0_sample_metadata_filtered.csv')) -->
+<!-- ttest_per_test_substance <- function(pqn, sample_metadata, test_substance=2){ -->
+<!--     pqn_t <- data.frame(t(pqn[,-1])) -->
+<!--     colnames(pqn_t) <- pqn$feature_name -->
+<!--     pqn_t$sample_name <- rownames(pqn_t) -->
+<!--     pqn_long <- melt(pqn_t, id.vars=c('sample_name')) -->
+<!--     pqn_long <- merge(pqn_long, sample_metadata[,c('sample_name', 'test_substance', 'dose_group')], on='sample_name') -->
+<!--     pqn_long <- pqn_long[pqn_long$test_substance != "QC",] -->
+<!--     pqn_long$test_substance <- as.numeric(pqn_long$test_substance) -->
+<!--     pqn_long$dose <- as.numeric(pqn_long$dose) -->
+<!--     pqn_long$value <- as.numeric(pqn_long$value) -->
+<!--     # Just check test substance 1 -->
+<!--     pqn_long <- pqn_long[pqn_long$test_substance == test_substance | pqn_long$dose_group == 0, ] -->
+<!--     ttest_l = list() -->
+<!--     feature_names <- pqn$feature_name -->
+<!--     doses <- c(1,2) -->
+<!--     n = 0 -->
+<!--     for (dose in doses){ -->
+<!--       for (feature in feature_names){ -->
+<!--         n = n + 1 -->
+<!--         if (n %% 1000 == 0 || n == 1){ -->
+<!--           print(c(n, 'of', length(feature_names)*length(doses))) -->
+<!--         } -->
+<!--         treated <- pqn_long[pqn_long$dose_group == dose & -->
+<!--                             pqn_long$variable == feature,] -->
+<!--         control <- pqn_long[pqn_long$dose_group == 0 & -->
+<!--                             pqn_long$variable == feature,] -->
+<!--         # Specify that we need 3 or more samples in both the treated and control condition -->
+<!--         if (sum(!is.na(treated$value)) > 2 && sum(!is.na(control$value)) > 2){ -->
+<!--               ttest_out <- t.test(treated$value, control$value) -->
+<!--               if (mean(control$value, na.rm=T) > 0){ -->
+<!--                 fc <- mean(treated$value, na.rm=T) / mean(control$value, na.rm=T)   -->
+<!--               }else{ -->
+<!--                 fc <- NA -->
+<!--               } -->
+<!--               ttest_l[[n]] <- c(feature, dose, ttest_out$p.value, ttest_out$statistic, fc) -->
+<!--         }else{ -->
+<!--           ttest_l[[n]] <- c(feature, dose, NA, NA, NA) -->
+<!--         } -->
+<!--       } -->
+<!--     } -->
+<!--     ttest_df <- data.frame(Reduce(rbind, ttest_l)) -->
+<!--     colnames(ttest_df) <- c('feature_name', 'dose', 'pvalue', 'tstat', 'fc') -->
+<!--     ttest_df$pvalue <- as.numeric(ttest_df$pvalue) -->
+<!--     ttest_df$tstat <- as.numeric(ttest_df$tstat) -->
+<!--     ttest_df$fc <- as.numeric(ttest_df$fc) -->
+<!--     ttest_df <- ttest_df[!is.na(ttest_df$pvalue),] -->
+<!--     rownames(ttest_df) <- NULL -->
+<!--     return(ttest_df) -->
+<!-- } -->
+<!-- ``` -->
+<!-- ```{r run_function} -->
+<!-- ttest_ts2 <- ttest_per_test_substance(pqn, sample_metadata, test_substance=2) -->
+<!-- ``` -->
+<!-- # t-stat - PCA -->
+<!-- We can also represent the data using PCA  -->
+<!-- ```{r PCA_unblind, fig.height=6, fig.width=8} -->
+<!-- library(ggplot2) -->
+<!-- tstats <- read.csv(file.path(root, 'data/combined_male_tstats.csv'), row.names = 1) -->
+<!-- tstats_scaled <- scale(tstats, center=FALSE, scale=TRUE) -->
+<!-- unblinded_names <- read.csv(file.path(root, 'data/unblinded_ordered_names.csv'), header = TRUE) -->
+<!-- colnames(tstats) <- unblinded_names$full_label -->
+<!-- tstats_scaled <- scale(tstats, center=FALSE, scale=TRUE) -->
+<!-- # transpose as features should be columns -->
+<!-- tstats_scaled_t <- data.frame(t(tstats_scaled)) -->
+<!-- # Simply giving missing values a value of zero (but in practice this should be looked into more -->
+<!-- # closely and missing value imputed approaches can be used -->
+<!-- tstats_scaled_t[is.na(tstats_scaled_t)] <- 0 -->
+<!-- # remove features with no response -->
+<!-- tstats_scaled_t_rm0 <- tstats_scaled_t[, colSums(tstats_scaled_t != 0) > 0] -->
+<!-- # Run PCA -->
+<!-- pca_tstats <- prcomp(tstats_scaled_t_rm0, center = TRUE, scale. = TRUE) -->
+<!-- summ <- summary(pca_tstats) -->
+<!-- tstats_scaled_t_rm0$full_label <- rownames(tstats_scaled_t_rm0) -->
+<!-- pca_df <- data.frame(cbind(pca_tstats$x[,1:2], unblinded_names)) -->
+<!-- # Plot the PCA -->
+<!-- ggplot(pca_df, aes(PC1, PC2, color=moa, label=moa)) +  -->
+<!--    geom_text(aes(label = compound_name_dose), hjust = 0.5,  vjust = -1) + -->
+<!--    geom_point(aes(color=moa)) + -->
+<!--    stat_ellipse(geom = "polygon", aes(fill = after_scale(alpha(colour, 0.3))))+ -->
+<!--    scale_colour_manual(values=c("orange","black","blue"))+ -->
+<!--    xlab(paste("PC1 (", round(summ$importance[2,1]*100,1), "%)", sep='')) + -->
+<!--    ylab(paste("PC2 (", round(summ$importance[2,2]*100,1), "%)", sep='')) + -->
+<!--    theme_bw() -->
+<!-- ``` -->
+<div id="acknowledgements" class="section level1">
+<h1>Acknowledgements</h1>
+<p>The mass spectrometry data processing workflow was developed by the
+University of Birmingham Viant Research group and the Phenome Centre
+Birmingham (PCB). See associated relevant publications and packages:</p>
+<ul>
+<li><strong>Struct</strong> - the R framework developed and use for the
+metabolomics analysis (<a
+href="https://bioconductor.org/packages/release/bioc/html/struct.html">struct</a>,
+<a
+href="https://www.bioconductor.org/packages/release/bioc/html/structToolbox.html">structToolbox</a>)
+<span class="citation">(<a href="#ref-lloyd2020struct">Lloyd, Jankevics,
+and Weber 2020</a>)</span></li>
+<li><strong>pmp</strong> - the R package used for peak matrix processing
+<a
+href="https://bioconductor.org/packages/release/bioc/html/pmp.html">(pmp)</a>.
+,</li>
+<li><strong>xenobiotic filtering</strong> the paper describing the
+xenobiotic filtering approach <span class="citation">(<a
+href="#ref-bowen2023simultaneously">Bowen et al. 2023</a>)</span></li>
+</ul>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+<div id="ref-bowen2023simultaneously" class="csl-entry">
+Bowen, Tara J, Andrew D Southam, Andrew R Hall, Ralf JM Weber, Gavin R
+Lloyd, Ruth Macdonald, Amanda Wilson, Amy Pointon, and Mark R Viant.
+2023. <span>“Simultaneously Discovering the Fate and Biochemical Effects
+of Pharmaceuticals Through Untargeted Metabolomics.”</span> <em>Nature
+Communications</em> 14 (1): 4653.
+</div>
+<div id="ref-lloyd2020struct" class="csl-entry">
+Lloyd, Gavin Rhys, Andris Jankevics, and Ralf J M Weber. 2020.
+<span>“<span class="nocase">struct: an R/Bioconductor-based framework
+for standardized metabolomics data analysis and beyond</span>.”</span>
+<em>Bioinformatics</em> 36 (22-23): 5551–52. <a
+href="https://doi.org/10.1093/bioinformatics/btaa1031">https://doi.org/10.1093/bioinformatics/btaa1031</a>.
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
