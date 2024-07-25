@@ -472,48 +472,20 @@ href="https://raw.githubusercontent.com/michabohealthscience/training-fsa/main/d
 <p>Let’s start with the pre-filtering and pre-normalisation dataset and
 see what a typical metabolomics data matrix looks like.</p>
 <pre class="r"><code>hilic_pos_all &lt;- read.csv(file.path(root, &#39;data/HILIC_POS_male/1_unfiltered.csv&#39;), row.names = 1)</code></pre>
-<p>Again, head can be used for a quick check while View can be used to
-obtain more detail.</p>
-<p>The first column refers to the <em>m/z</em> and retention time of a
-feature while the columns are the samples.</p>
+<p>Again, we can use the RStudio <strong>Environment</strong> panel and
+click on the <code>hilic_pos_all</code> data object to see a more user
+friendly view of the data.</p>
+<p>The row names refers to the <em>m/z</em> and retention time of a
+feature whilst the column names are the samples.</p>
 <p>Let’s check how many samples and features we have for this data
-matrix.</p>
+matrix, we can use the functions <code>nrow</code> and <code>ncol</code>
+for this.</p>
 <pre class="r"><code># feature count
-feature_c_all = nrow(hilic_pos_all)
+nrow(hilic_pos_all)
 # sample count
-samp_c_all = ncol(hilic_pos_all)
-
-feature_c_all
-samp_c_all</code></pre>
+ncol(hilic_pos_all)</code></pre>
 <pre><code>## [1] 12123
 ## [1] 112</code></pre>
-<p>We can compare this raw data matrix to the filtered data matrix to
-see how many features have been removed due to the standard processing
-steps (i.e. steps 1-6)</p>
-<pre class="r"><code>hilic_pos_f &lt;- read.csv(file.path(root, &#39;data/HILIC_POS_male/2_filtered.csv&#39;), row.names = 1)</code></pre>
-<p>For this tutorial dataset we should find that only 1 sample was
-discarded (the blank sample - as it is no longer required for further
-analysis) and a substantial number of the metabolite features have been
-removed that were deemed not suitable for further analysis.</p>
-<pre class="r"><code># feature count
-feature_c_f = nrow(hilic_pos_f)
-# sample count
-samp_c_f = ncol(hilic_pos_f)
-
-
-print(c(&#39;All samples:&#39;, samp_c_all))
-print(c(&#39;Samples removed:&#39;, samp_c_all-samp_c_f))
-print(c(&#39;Remaining samples:&#39;, samp_c_f))
-
-print(c(&#39;All features:&#39;, feature_c_all))
-print(c(&#39;Features removed:&#39;, feature_c_all-feature_c_f))
-print(c(&#39;remaining features:&#39;, feature_c_f))</code></pre>
-<pre><code>## [1] &quot;All samples:&quot; &quot;112&quot;         
-## [1] &quot;Samples removed:&quot; &quot;1&quot;               
-## [1] &quot;Remaining samples:&quot; &quot;111&quot;               
-## [1] &quot;All features:&quot; &quot;12123&quot;        
-## [1] &quot;Features removed:&quot; &quot;4797&quot;             
-## [1] &quot;remaining features:&quot; &quot;7326&quot;</code></pre>
 <p>Now that we have a better understanding of metabolomics data
 matrices, we can briefly explain the quality assessments before getting
 started on the statistical analysis.</p>

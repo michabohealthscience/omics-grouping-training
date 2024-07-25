@@ -41,7 +41,7 @@ root <- 'https://raw.githubusercontent.com/michabohealthscience/training-fsa/mai
 
 # Mean comparison plot
 Alternative plot for comparing treatment vs control
-```{r compare_means, results = "hold"}
+```{r compare_means, results = "hold", fig.show='hold', warning=FALSE}
 library(dplyr)
 library(ggplot2)
 ctdf <- read.csv('data/ctdf_f2000.csv')

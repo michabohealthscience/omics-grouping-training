@@ -402,7 +402,6 @@ href="https://raw.githubusercontent.com/michabohealthscience/training-fsa/main/d
 <h1>Mean comparison plot</h1>
 <p>Alternative plot for comparing treatment vs control</p>
 <pre class="r"><code>library(dplyr)</code></pre>
-<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 4.4.1</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;dplyr&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:stats&#39;:
@@ -411,9 +410,8 @@ href="https://raw.githubusercontent.com/michabohealthscience/training-fsa/main/d
 <pre><code>## The following objects are masked from &#39;package:base&#39;:
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
-<pre class="r"><code>library(ggplot2)</code></pre>
-<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.4.1</code></pre>
-<pre class="r"><code>ctdf &lt;- read.csv(&#39;data/ctdf_f2000.csv&#39;)
+<pre class="r"><code>library(ggplot2)
+ctdf &lt;- read.csv(&#39;data/ctdf_f2000.csv&#39;)
 ctdf %&gt;%
     ggplot(aes(as.factor(control_treated),
                intensity)) +
@@ -422,11 +420,6 @@ ctdf %&gt;%
                  geom = &quot;point&quot;) +
     stat_summary(fun.data = mean_se,
                  geom = &quot;errorbar&quot;)</code></pre>
-<pre><code>## Warning: The `fun.y` argument of `stat_summary()` is deprecated as of ggplot2 3.3.0.
-## ℹ Please use the `fun` argument instead.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.</code></pre>
 <p><img src="6_more_info_files/figure-html/compare_means-1.png" width="672" /></p>
 </div>
 <div id="t-test-loop" class="section level1">

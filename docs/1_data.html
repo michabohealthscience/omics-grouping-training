@@ -467,8 +467,8 @@ We can read this file into R using the <code>read.csv</code> function
 and by specifying the URL path to the ‘.csv’ file. This will save the
 metadata as a <code>dataframe</code> R object.</p>
 <pre class="r"><code>sample_metadata_all &lt;- read.csv(file.path(root, &#39;data/HILIC_POS_male/0_sample_metadata.csv&#39;))</code></pre>
-<p>Let’s have a quick look at the sample metadata. We can use the head
-function just to see the first few rows.</p>
+<p>Let’s have a quick look at the sample metadata. We can use the
+<code>head</code> function just to see the first few rows.</p>
 <pre class="r"><code>head(sample_metadata_all)</code></pre>
 <pre><code>##                   sample_name  Class injection_order         PCB_ID
 ## 1              RP04_isQC44_pp     QC             123 RP04_isQC44_pp
@@ -492,8 +492,10 @@ function just to see the first few rows.</p>
 ## 5          2          1        1
 ## 6          2          1        1</code></pre>
 <p>   </p>
-<p>We can use <code>View(sample_metadata_all)</code> in a more user
-friendly manner within RStudio where you can filter the columns.</p>
+<p>If we look in the RStudio <strong>Environment</strong> panel and
+click on <code>sample_metadata_all</code> data object, we can see a more
+user friendly view of the data where you can filter columns.
+Alternatively you can run <code>View(sample_metadata_all)</code>.</p>
 <p><img src="RStudio_sample_metadata_view.png" />    </p>
 <p>The following information regarding the independent variables for
 each sample was available to the metabolomics labs prior to
@@ -517,8 +519,8 @@ metabolite extraction). Like with the run order, the preparation order
 was randomized across the samples to help counteract any confounding
 variable eﬀects that may bias the results of the experiment.</p>
 </div>
-<div id="how-much-data-are-we-using" class="section level1">
-<h1>How much data are we using?</h1>
+<div id="how-big-is-the-dataset" class="section level1">
+<h1>How big is the dataset?</h1>
 <p>When we combine all the assays (HILIC_POS, HILIC_NEG, LIPIDS_POS,
 LIPID_NEG) for the male component of the data, we are analysig 28,664
 metabolite features across 90 samples so… 28,664 x 90 = 2,579,760 data

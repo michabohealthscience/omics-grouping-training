@@ -75,50 +75,20 @@ root <- '.'
 ```{r hilic_pos_intensity_unfiltered}
 hilic_pos_all <- read.csv(file.path(root, 'data/HILIC_POS_male/1_unfiltered.csv'), row.names = 1)
 
-
 ```
 
-Again, head can be used for a quick check while View can be used to obtain more detail.
+Again, we can use the RStudio **Environment** panel and click on the `hilic_pos_all` data object to see a more user friendly view of the data.
 
-The first column refers to the *m/z* and retention time of a feature while the columns are the samples.
+The row names refers to the *m/z* and retention time of a feature whilst the column names are the samples.
 
-Let’s check how many samples and features we have for this data matrix.
+Let’s check how many samples and features we have for this data matrix, we can use the functions `nrow` and `ncol` for this.
 
 
 ```{r hilic_pos_intensity_cols_rows, results = "hold"}
 # feature count
-feature_c_all = nrow(hilic_pos_all)
+nrow(hilic_pos_all)
 # sample count
-samp_c_all = ncol(hilic_pos_all)
-
-feature_c_all
-samp_c_all
-```
-
-We can compare this raw data matrix to the filtered data matrix to see how many features have been removed due to the standard processing steps (i.e. steps 1-6)
-
-
-```{r hilic_pos_intensity_filtered, results = "hold"}
-hilic_pos_f <- read.csv(file.path(root, 'data/HILIC_POS_male/2_filtered.csv'), row.names = 1)
-```
-
-For this tutorial dataset we should find that only 1 sample was discarded (the blank sample - as it is no longer required for further analysis) and a substantial number of the metabolite features have been removed that were deemed not suitable for further analysis.
-
-```{r hilic_pos_intensity_filtered_cols_rows, results = "hold"}
-
-# feature count
-feature_c_f = nrow(hilic_pos_f)
-# sample count
-samp_c_f = ncol(hilic_pos_f)
-
-
-print(c('All samples:', samp_c_all))
-print(c('Samples removed:', samp_c_all-samp_c_f))
-print(c('Remaining samples:', samp_c_f))
-
-print(c('All features:', feature_c_all))
-print(c('Features removed:', feature_c_all-feature_c_f))
-print(c('remaining features:', feature_c_f))
+ncol(hilic_pos_all)
 ```
 
 

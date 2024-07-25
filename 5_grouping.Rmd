@@ -71,7 +71,7 @@ Let’s run the grouping with pvclust by using Euclidean distance matrix and the
 
 See the following link for [further details on linkage methods](https://i2.wp.com/dataaspirant.com/wp-content/uploads/2020/12/15-Hierarchical-Clustering-Linkages.png?resize=609%2C659&ssl=1)).
 
-```{r HCA_blind}
+```{r HCA_blind, warning=FALSE}
 library(pvclust)
 pvclust_res <- pvclust(tstats_scaled, method.dist="euclidean", method.hclust = "ward.D2", nboot=100)
 

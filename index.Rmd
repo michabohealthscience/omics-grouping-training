@@ -54,6 +54,8 @@ The training has five stages
 
 R (and R Studio) should already be pre-installed on all the trainees computers. 
 
+We will work through the tutorial by copying the commands into an R Script and running the commands within R Studio.
+
 If not already, please run the following command to install the relevant packages needed for the training. 
 
 

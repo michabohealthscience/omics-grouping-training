@@ -410,9 +410,8 @@ method).</p>
 <p>See the following link for <a
 href="https://i2.wp.com/dataaspirant.com/wp-content/uploads/2020/12/15-Hierarchical-Clustering-Linkages.png?resize=609%2C659&amp;ssl=1">further
 details on linkage methods</a>).</p>
-<pre class="r"><code>library(pvclust)</code></pre>
-<pre><code>## Warning: package &#39;pvclust&#39; was built under R version 4.4.1</code></pre>
-<pre class="r"><code>pvclust_res &lt;- pvclust(tstats_scaled, method.dist=&quot;euclidean&quot;, method.hclust = &quot;ward.D2&quot;, nboot=100)</code></pre>
+<pre class="r"><code>library(pvclust)
+pvclust_res &lt;- pvclust(tstats_scaled, method.dist=&quot;euclidean&quot;, method.hclust = &quot;ward.D2&quot;, nboot=100)</code></pre>
 <pre><code>## Bootstrap (r = 0.5)... Done.
 ## Bootstrap (r = 0.6)... Done.
 ## Bootstrap (r = 0.7)... Done.

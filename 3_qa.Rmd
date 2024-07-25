@@ -27,7 +27,7 @@ Whenever using omics datasets, suﬃcient quality assessments need to be perform
 All 6 of the participating ring trial labs underwent quality assessments, and all but one passed.
 One of the key metrics involved in this assessment is evaluating interstudy quality control samples, which are a pooled sample derived from all other samples. The interstudy QC samples were assessed by using Principal Component Analysis (PCA) and by examining the medium relative standard deviation across all features. Following this evaluation, the data quality from RP8 was deemed not to be suﬃciently high and was thus removed from further analysis [@viant2024demonstrating].
 
-```{r table, tidy=FALSE, echo=FALSE}
+```{r table, tidy=FALSE, echo=FALSE, warning=FALSE}
 library(formattable)
 library(tidyr)
 library(knitr)

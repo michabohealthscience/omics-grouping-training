@@ -83,10 +83,9 @@ The sample metadata is stored in a comma-separated text file (.csv). We can read
 
 ```{r sample_metadata}
 sample_metadata_all <- read.csv(file.path(root, 'data/HILIC_POS_male/0_sample_metadata.csv'))
-
 ```
 
-Let’s have a quick look at the sample metadata. We can use the head function just to see the first few rows.
+Let’s have a quick look at the sample metadata. We can use the `head` function just to see the first few rows.
 
 ```{r sample_metadata_view}
 head(sample_metadata_all)
@@ -96,7 +95,7 @@ head(sample_metadata_all)
 &nbsp;
 
 
-We can use `View(sample_metadata_all)` in a more user friendly manner within RStudio where you can filter the columns. 
+If we look in the RStudio **Environment** panel and click on `sample_metadata_all` data object, we can see a more user friendly view of the data where you can filter columns. Alternatively you can run `View(sample_metadata_all)`.
 
 ![](RStudio_sample_metadata_view.png)
 &nbsp;
@@ -119,7 +118,7 @@ For each test substance and dose, there are 5 biological replicates (i.e. 5 samp
 The ‘prep order’ refers to the preparation of the samples (i.e., metabolite extraction). Like with the run order, the preparation order was randomized across the samples to help counteract any confounding variable eﬀects that may bias the results of the experiment.
 
 
-# How much data are we using?
+# How big is the dataset?
 
 When we combine all the assays (HILIC_POS, HILIC_NEG, LIPIDS_POS, LIPID_NEG) for the male component of the data, we are analysig 28,664 metabolite features across 90 samples so… 28,664 x 90 = 2,579,760 data points!
 
