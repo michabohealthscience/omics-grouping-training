@@ -38,7 +38,7 @@ Mass spectrometry coupled liquid chromatography (in particular high-resolution m
 Full details of the methods are found in the supplemental materials of the Cefic MATCHING publication
  [supplemental of Cefic MATCHING publication](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10944399/bin/204_2024_3680_MOESM1_ESM.pdf) [@viant2024demonstrating].
 
-The UHPLC−MS approach used for our dataset consisted of four assays, comprising two types of chromatography and two mass spectrometry ionisation modes (positive and negative). The chromatographic columns were either a Hydrophilic Interaction Liquid “HILIC” column (primarily to measure polar metabolites) or a C18 column (primarily to measure lipids). These data types are labeled in the following way:
+The UHPLC−MS approach used for our dataset consisted of four assays, comprising two types of chromatography and two mass spectrometry ionisation modes (positive and negative). The chromatographic columns were either a Hydrophilic interaction liquid chromatography “HILIC” column (primarily to measure polar metabolites) or a C18 column (primarily to measure lipids). These data types are labeled in the following way:
 
 * HILIC_POS
 * HILIC_NEG

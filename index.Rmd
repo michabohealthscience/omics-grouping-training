@@ -56,7 +56,13 @@ R (and R Studio) should already be pre-installed on all the trainees computers.
 
 We will work through the tutorial by copying the commands into an R Script and running the commands within R Studio.
 
-If not already, please run the following command to install the relevant packages needed for the training. 
+
+![Fig 2. RStudio panels](Rstudio.png){width=600px}
+&nbsp;
+
+&nbsp;
+
+If you have already done so, please run the following command to install the relevant packages needed for the training. 
 
 
 ```{r package install, eval=FALSE}
@@ -66,10 +72,6 @@ install.packages(c('pvclust', 'ggplot2', 'ggfortify', 'dplyr', 'reshape2', 'tidy
 
 See below for a reminder of the different panels will be using in R Studio today
 
-![Fig 2. RStudio panels](Rstudio.png){width=600px}
-&nbsp;
-
-&nbsp;
 
 
 
