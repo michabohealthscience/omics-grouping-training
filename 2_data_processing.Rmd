@@ -48,11 +48,11 @@ The full details of the data processing methods are found in the [supplemental m
 The HILIC_POS assay for male rodents was used as an example for this practical with the following relevant data files for the training available on the github site:
 
 
-* **[data/HILIC_POS_male/1_unfiltered.csv](https://raw.githubusercontent.com/michabohealthscience/training-fsa/main/data/HILIC_POS_male/1_unfiltered.csv)** - unfiltered intensity matrix following step 1
-* **[data/HILIC_POS_male/2_filtered.csv](https://raw.githubusercontent.com/michabohealthscience/training-fsa/main/data/HILIC_POS_male/2_filtered.csv)** - filtered (both samples and features) intensity matrix following steps 1-6
-* **[data/HILIC_POS_male/3_pqn.csv](https://raw.githubusercontent.com/michabohealthscience/training-fsa/main/data/HILIC_POS_male/3_pqn.csv)** - PQN normalised intensity matrix following steps 1-7
-* **[data/HILIC_POS_male/4_mv_imputed.csv](https://raw.githubusercontent.com/michabohealthscience/training-fsa/main/data/HILIC_POS_male/4_mv_imputed.csv)** - missing value imputed intensity matrix following steps 1-8
-* **[data/HILIC_POS_male/5_glog.csv](https://raw.githubusercontent.com/michabohealthscience/training-fsa/main/data/HILIC_POS_male/5_glog.csv)** - glog intensity matrix following steps 1-9
+* **[data/HILIC_POS_male/1_unfiltered.csv](https://raw.githubusercontent.com/michabohealthscience/omics-grouping-training/main/data/HILIC_POS_male/1_unfiltered.csv)** - unfiltered intensity matrix following step 1
+* **[data/HILIC_POS_male/2_filtered.csv](https://raw.githubusercontent.com/michabohealthscience/omics-grouping-training/main/data/HILIC_POS_male/2_filtered.csv)** - filtered (both samples and features) intensity matrix following steps 1-6
+* **[data/HILIC_POS_male/3_pqn.csv](https://raw.githubusercontent.com/michabohealthscience/omics-grouping-training/main/data/HILIC_POS_male/3_pqn.csv)** - PQN normalised intensity matrix following steps 1-7
+* **[data/HILIC_POS_male/4_mv_imputed.csv](https://raw.githubusercontent.com/michabohealthscience/omics-grouping-training/main/data/HILIC_POS_male/4_mv_imputed.csv)** - missing value imputed intensity matrix following steps 1-8
+* **[data/HILIC_POS_male/5_glog.csv](https://raw.githubusercontent.com/michabohealthscience/omics-grouping-training/main/data/HILIC_POS_male/5_glog.csv)** - glog intensity matrix following steps 1-9
 
 
 
@@ -63,7 +63,7 @@ Let’s start with the pre-filtering and pre-normalisation dataset and see what 
 
 
 ```{r root_dir_url, echo=FALSE}
-root <- 'https://raw.githubusercontent.com/michabohealthscience/training-fsa/main'
+root <- 'https://raw.githubusercontent.com/michabohealthscience/omics-grouping-training/main'
 ```
 
 

@@ -23,6 +23,8 @@ knitr::opts_chunk$set(echo = TRUE)
 The tutorial will use data generated as part of the **Cefic MATCHING study**. the Its aim was to conduct a blinded international ring trial to investigate whether six metabolomics labs, each generating, analysing and reporting metabolomics data from a single exposure study (rodent plasma), would independently arrive at the same grouping hypothesis [@viant2024demonstrating].
 
 ![](Phenome-Centre-Birmingham.png){width=300px}
+&nbsp;
+
 Rather than using all the data from the Cefic MATCHING study, this tutorial will focus only on metabolomics data obtained from sampling the plasma of **male** rats and the processed mass spectrometry data obtained from a single ring trial labs (**Phenome Centre Birmingham**).
 
 
@@ -67,11 +69,6 @@ All files for this practical are downloaded directly from the Github repository.
 root <- 'https://raw.githubusercontent.com/michabohealthscience/omics-grouping-training/main'
 ```
 
-If you are using data downloaded locally, please change the root variable to the path where the data are located.
-
-The sample metadata is stored in a comma-separated text file (.csv). We can read this file into R using the read.csv function and by specifying the URL path to the ‘.csv’ file. This will save the metadata as a dataframe R object.
-
-
 ```{r root_dir, echo=FALSE}
 root <- '.'
 ```
@@ -79,7 +76,14 @@ root <- '.'
 
 If you are using data downloaded locally, please change the root variable to the path where the data are located.
 
-The sample metadata is stored in a comma-separated text file (.csv). We can read this file into R using the `read.csv` function and by specifying the URL path to the ‘.csv’ file. This will save the metadata as a `dataframe` R object.
+The sample metadata is stored in a comma-separated text file (.csv) available to download via Github, see [data/HILIC_POS_male/0_sample_metadata.csv](https://raw.githubusercontent.com/michabohealthscience/omics-grouping-training/main/data/HILIC_POS_male/0_sample_metadata.csv). 
+
+We can read this file into R using the `read.csv` function and by specifying the URL path to the ‘.csv’ file.  
+
+The `read.csv` function will save the metadata as a dataframe R object.
+
+
+
 
 ```{r sample_metadata}
 sample_metadata_all <- read.csv(file.path(root, 'data/HILIC_POS_male/0_sample_metadata.csv'))
@@ -120,7 +124,7 @@ The ‘prep order’ refers to the preparation of the samples (i.e., metabolite 
 
 # How big is the dataset?
 
-When we combine all the assays (HILIC_POS, HILIC_NEG, LIPIDS_POS, LIPID_NEG) for the male component of the data, we are analysig 28,664 metabolite features across 90 samples so… 28,664 x 90 = 2,579,760 data points!
+When we combine all the assays (HILIC_POS, HILIC_NEG, LIPIDS_POS, LIPID_NEG) for the male component of the data, we are analysing 28,664 metabolite features across 90 samples so… 28,664 x 90 = 2,579,760 data points!
 
 
 # References {-}

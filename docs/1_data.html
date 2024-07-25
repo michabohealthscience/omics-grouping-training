@@ -385,11 +385,11 @@ each generating, analysing and reporting metabolomics data from a single
 exposure study (rodent plasma), would independently arrive at the same
 grouping hypothesis <span class="citation">(<a
 href="#ref-viant2024demonstrating">Viant et al. 2024</a>)</span>.</p>
-<p><img src="Phenome-Centre-Birmingham.png" width="300" /> Rather than
-using all the data from the Cefic MATCHING study, this tutorial will
-focus only on metabolomics data obtained from sampling the plasma of
-<strong>male</strong> rats and the processed mass spectrometry data
-obtained from a single ring trial labs (<strong>Phenome Centre
+<p><img src="Phenome-Centre-Birmingham.png" width="300" />  </p>
+<p>Rather than using all the data from the Cefic MATCHING study, this
+tutorial will focus only on metabolomics data obtained from sampling the
+plasma of <strong>male</strong> rats and the processed mass spectrometry
+data obtained from a single ring trial labs (<strong>Phenome Centre
 Birmingham</strong>).</p>
 <div class="float">
 <img src="pcb_ms.png" width="300"
@@ -457,16 +457,13 @@ repository. See the root URL below.</p>
 <pre class="r"><code>root &lt;- &#39;https://raw.githubusercontent.com/michabohealthscience/omics-grouping-training/main&#39;</code></pre>
 <p>If you are using data downloaded locally, please change the root
 variable to the path where the data are located.</p>
-<p>The sample metadata is stored in a comma-separated text file (.csv).
-We can read this file into R using the read.csv function and by
-specifying the URL path to the ‘.csv’ file. This will save the metadata
-as a dataframe R object.</p>
-<p>If you are using data downloaded locally, please change the root
-variable to the path where the data are located.</p>
-<p>The sample metadata is stored in a comma-separated text file (.csv).
-We can read this file into R using the <code>read.csv</code> function
-and by specifying the URL path to the ‘.csv’ file. This will save the
-metadata as a <code>dataframe</code> R object.</p>
+<p>The sample metadata is stored in a comma-separated text file (.csv)
+available to download via Github, see <a
+href="https://raw.githubusercontent.com/michabohealthscience/training-fsa/main/data/HILIC_POS_male/0_sample_metadata.csv">data/HILIC_POS_male/0_sample_metadata.csv</a>.</p>
+<p>We can read this file into R using the <code>read.csv</code> function
+and by specifying the URL path to the ‘.csv’ file.</p>
+<p>The <code>read.csv</code> function will save the metadata as a
+dataframe R object.</p>
 <pre class="r"><code>sample_metadata_all &lt;- read.csv(file.path(root, &#39;data/HILIC_POS_male/0_sample_metadata.csv&#39;))</code></pre>
 <p>Let’s have a quick look at the sample metadata. We can use the
 <code>head</code> function just to see the first few rows.</p>
@@ -523,7 +520,7 @@ variable eﬀects that may bias the results of the experiment.</p>
 <div id="how-big-is-the-dataset" class="section level1">
 <h1>How big is the dataset?</h1>
 <p>When we combine all the assays (HILIC_POS, HILIC_NEG, LIPIDS_POS,
-LIPID_NEG) for the male component of the data, we are analysig 28,664
+LIPID_NEG) for the male component of the data, we are analysing 28,664
 metabolite features across 90 samples so… 28,664 x 90 = 2,579,760 data
 points!</p>
 </div>
