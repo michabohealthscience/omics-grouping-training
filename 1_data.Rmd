@@ -121,10 +121,7 @@ For each test substance and dose, there are 5 biological replicates (i.e. 5 samp
 
 The ‘prep order’ refers to the preparation of the samples (i.e., metabolite extraction). Like with the run order, the preparation order was randomized across the samples to help counteract any confounding variable eﬀects that may bias the results of the experiment.
 
-
-# How big is the dataset?
-
-When we combine all the assays (HILIC_POS, HILIC_NEG, LIPIDS_POS, LIPID_NEG) for the male component of the data, we are analysing 28,664 metabolite features across 90 samples so… 28,664 x 90 = 2,579,760 data points!
+> **How big is the dataset?** When we combine all the assays (HILIC_POS, HILIC_NEG, LIPIDS_POS, LIPID_NEG) for the male component of the data, we are analysing 28,664 metabolite features across 90 samples so… 28,664 x 90 = 2,579,760 data points!
 
 
 # References {-}
