@@ -1,4 +1,1 @@
 # Omics training R practical
-
-
-
